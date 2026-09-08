@@ -15,6 +15,10 @@
 
 *Left: the rolling 2.5-D coloured-cell local map. Right: a pose-accumulated 3-D terrain surface, reconstructed from ONE monocular RGB camera — no LiDAR.*
 
+### ▶ [Watch the 60-second highlight reel](output/final_demo.mp4)
+
+A Manim-animated title, argument and architecture walkthrough, cut together with real footage from all 9 completed pipeline stages — nothing in the montage is synthetic, every second is pulled straight from the verified stage videos below.
+
 </div>
 
 ---

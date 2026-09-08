@@ -8,6 +8,9 @@ temp/
 # Trained checkpoints - large binaries, regenerate via the training scripts in drishti/training/
 checkpoints/
 
+# Manim's own SVG/text glyph cache, written to ./media/ by default
+media/
+
 # Python
 __pycache__/
 *.pyc
