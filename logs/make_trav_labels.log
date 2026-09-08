@@ -1,0 +1,82 @@
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+[extra] reusing cached extras (48 pairs)
+Loading weights:   0%|          | 0/208 [00:00<?, ?it/s]Loading weights: 100%|##########| 208/208 [00:00<00:00, 2680.08it/s]
+D:\HARSHIT\UVG\drishti\models\uncertainty.py:120: RuntimeWarning: invalid value encountered in divide
+  Z = pc[:, 2]
+D:\HARSHIT\UVG\drishti\models\uncertainty.py:121: RuntimeWarning: invalid value encountered in divide
+  ok = np.asarray(valid_prev, bool).reshape(-1) & np.isfinite(Z) & (Z > 0.10) & (Z < 30.0)
+D:\HARSHIT\UVG\drishti\models\uncertainty.py:122: RuntimeWarning: invalid value encountered in cast
+  if not ok.any():
+D:\HARSHIT\UVG\drishti\models\uncertainty.py:123: RuntimeWarning: invalid value encountered in cast
+  return (np.full((H, W), np.nan, np.float32), np.zeros((H, W), np.float32),
+[teacher] SegFormer-B0 loaded for the student/teacher disagreement target
+[clip_01] 40 frames in 36s
+[clip_02] 40 frames in 33s
+[clip_03] 40 frames in 41s
+[clip_04] 40 frames in 44s
+[clip_05] 40 frames in 75s
+[extra_input] 48 frames in 53s
+{
+  "n_samples": 248,
+  "net_hw": [
+    180,
+    320
+  ],
+  "in_ch": 17,
+  "clips": [
+    "clip_01",
+    "clip_02",
+    "clip_03",
+    "clip_04",
+    "clip_05",
+    "extra_input"
+  ],
+  "class_pixel_fraction": {
+    "safe": 0.14185889896953405,
+    "risky": 0.18030997983870967,
+    "obstacle": 0.2929431283602151,
+    "unknown": 0.3751484094982079,
+    "ignore_255": 0.009739583333333333
+  },
+  "seg_error_target_mode": {
+    "teacher_disagreement": 248
+  },
+  "terrain_label_source": {
+    "clip_01": "seg_cache",
+    "clip_02": "seg_cache",
+    "clip_03": "seg_cache",
+    "clip_04": "seg_cache",
+    "clip_05": "seg_cache",
+    "extra_input": "seg_cache"
+  },
+  "relative_motion_source": {
+    "clip_01": "orb_yaw + direct forward-speed search (odom cache absent; target is a conservative lower bound)",
+    "clip_02": "orb_yaw + direct forward-speed search (odom cache absent; target is a conservative lower bound)",
+    "clip_03": "orb_yaw + direct forward-speed search (odom cache absent; target is a conservative lower bound)",
+    "clip_04": "orb_yaw + direct forward-speed search (odom cache absent; target is a conservative lower bound)",
+    "clip_05": "orb_yaw + direct forward-speed search (odom cache absent; target is a conservative lower bound)",
+    "extra_input": "orb_yaw + direct forward-speed search (input.mp4 frames have no VO track)"
+  },
+  "thresholds": {
+    "max_step_m": 0.03,
+    "clearance_m": 0.045,
+    "half_width_m": 0.11,
+    "max_slope_deg": 22.0,
+    "z_min_m": -0.45,
+    "obst_height_m": 0.03,
+    "risky_height_m": 0.015,
+    "structure_height_above_plane_m": 0.24,
+    "min_obstacle_patch_m2": 0.0374,
+    "neg_risky_height_m": -0.06,
+    "obst_slope_deg": 30.799999999999997,
+    "risky_slope_deg": 13.2,
+    "risky_rough_m": 0.015,
+    "obstacle_dilate_m": 0.16,
+    "depth_trust_m": 8.0,
+    "seg_conf_min": 0.35,
+    "seg_entropy_max": 0.8,
+    "risk_unknown_floor": 0.5,
+    "note": "all thresholds derive from CFG.ugv / CFG.bev; metric scale is anchored on the ASSUMED camera height CFG.cam.height_above_ground_m = 0.12 m, not on a calibration"
+  },
+  "supervision": "PSEUDO-LABELS from vehicle-envelope geometry + distilled terrain semantics. NOT human annotation, NOT RELLIS-3D/GOOSE/ORFD ground truth."
+}

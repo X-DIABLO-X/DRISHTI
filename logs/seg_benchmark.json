@@ -1,0 +1,22 @@
+{
+ "stage": "02_terrain_segmentation",
+ "model": "PIDNet-S (distilled), 7,717,839 params, 6.65 GFLOPs @ 512x288",
+ "hardware": "RTX 4050 Laptop 6 GB / Windows 11 / torch 2.11.0+cu128 - GPU AND CPU SHARED WITH 5 OTHER AGENTS during every measurement below",
+ "what_is_timed": "SegStage.result(): BGR frame -> label/prob_max/entropy at 640x360, including pre-processing, the network at 512x288, bilinear upsample, argmax/entropy and the device->host copy",
+ "measurements": {
+  "network_forward_only_gpu_fp16_ms": {"best": 24.0, "worst": 49.3,
+    "note": "drishti.models.seg_pidnet self-test, 512x288, batch 1, no pre/post"},
+  "network_forward_only_cpu_fp32_ms": {"best": 79.8, "worst": 517.0,
+    "note": "same self-test on CPU, PyTorch eager, no ONNX/INT8"},
+  "stage_end_to_end_gpu_fp16_ms": {"best": 46.0, "worst": 125.4},
+  "stage_end_to_end_cpu_fp32_ms": {"best": 289.7, "worst": 4378.7},
+  "teacher_end_to_end_gpu_fp16_ms": {"best": 165.7,
+    "note": "SegFormer-B0 fallback path (use_teacher=True), 910x512 input"},
+  "peak_vram_mib": {"inference": 37, "distillation_training": 590}
+ },
+ "honesty": [
+  "Every number was measured in this repo on the machine named above; nothing is quoted from a paper or a datasheet.",
+  "The spread between best and worst is GPU/CPU contention from the other agents sharing this box, not model variance. Take the 'best' column as the closest thing to an uncontended figure and re-measure on a quiet machine before quoting it.",
+  "No ONNX / INT8 export was built for this stage; the CPU numbers are PyTorch eager fp32."
+ ]
+}

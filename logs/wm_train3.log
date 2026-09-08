@@ -1,0 +1,13 @@
+[data] real cached BEV maps: clip_01, clip_02, clip_03, clip_04, clip_05
+[data] anchors=750  real multi-step transitions=600  (load 20.6s)
+[data] action labels from BEV map-matching fallback (no `odom` cache): the action whose warp best explains the next map
+[data] real action histogram: FORWARD=6  LEFT=4  RIGHT=1  SLOW=6  REROUTE=5  STOP=578
+[data] WARNING: STOP is 96% of the real labels. Real transitions are sampled with inverse-frequency weights so the rare actions still appear, but the action-conditioned part of the dynamics is learned mostly from the kinematic warp augmentation. Re-run once the `odom` cache exists.
+[data] plus kinematic warp augmentation for all 6 actions (60% of every batch) - augmentation, not observed data
+[model] 728,610 params (2.91 MB fp32) on cuda
+  step     0/10000  total 3.4255  lat 0.1575  occ 1.2628  trav 0.0628  risk 0.6644  (1s)
+  step   400/10000  total 2.1937  lat 0.0152  occ 0.9345  trav 0.0274  risk 0.3978  (89s)
+  step   800/10000  total 1.8182  lat 0.0620  occ 0.7815  trav 0.1135  risk 0.2928  (239s)
+  step  1200/10000  total 1.7916  lat 0.0614  occ 0.7742  trav 0.0310  risk 0.3007  (413s)
+  step  1600/10000  total 1.8877  lat 0.1292  occ 0.7066  trav 0.0300  risk 0.3904  (603s)
+  step  2000/10000  total 1.7574  lat 0.1050  occ 0.5827  trav 0.0074  risk 0.3937  (789s)

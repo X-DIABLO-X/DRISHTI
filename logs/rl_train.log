@@ -1,0 +1,30 @@
+Gym has been unmaintained since 2022 and does not support NumPy 2.0 amongst other critical functionality.
+Please upgrade to Gymnasium, the maintained drop-in replacement of Gym, or contact the authors of your software and request that they upgrade.
+Users of this version of Gym should be able to simply replace 'import gym' with 'import gymnasium as gym' in the vast majority of cases.
+See the migration guide at https://gymnasium.farama.org/introduction/migration_guide/ for additional information.
+[world model] D:\HARSHIT\UVG\checkpoints\world_model.pt  (728,610 params)
+[init states] 300 scenes from real cached BEV maps: clip_01, clip_02, clip_03, clip_04, clip_05
+[split] 240 training / 60 held-out initial states
+C:\Users\harsh\AppData\Roaming\Python\Python310\site-packages\stable_baselines3\common\policies.py:486: UserWarning: As shared layers in the mlp_extractor are removed since SB3 v1.8.0, you should now pass directly a dictionary and not a list (net_arch=dict(pi=..., vf=...) instead of net_arch=[dict(pi=..., vf=...)])
+  warnings.warn(
+[ppo] obs_dim 109, 6 actions, policy 22,855 params, 8 parallel envs, target 150,000 steps
+      40,960 steps  ep_rew_mean   +7.16  ep_len 20.6
+      81,920 steps  ep_rew_mean  +22.31  ep_len 31.8
+     122,880 steps  ep_rew_mean  +24.92  ep_len 32.0
+[ppo] trained 150,000 steps in 179s -> D:\HARSHIT\UVG\checkpoints\ppo_drishti.zip
+
+[eval] 60 held-out initial states, 32 steps (10.7 s) each
+  collisions are GEOMETRIC (footprint vs the warped real BEV map), not the world model's own risk head
+  ppo                    return   +24.36 +- 10.48 | progress   8.53 m | collisions  98.3% | stop-rate  20.0% | ep len 32.0
+  always_forward         return    +8.34 +- 18.94 | progress   5.45 m | collisions  60.0% | stop-rate   0.0% | ep len 16.4
+  random                 return   -18.79 +- 16.27 | progress   0.84 m | collisions  50.0% | stop-rate  14.9% | ep len 11.9
+  always_stop            return   -12.75 +-  1.77 | progress   0.00 m | collisions   0.0% | stop-rate 100.0% | ep len 32.0
+
+[verdict]
+  PPO beats always-FORWARD on return (+24.36 vs +8.34)
+  PPO beats random on return (+24.36 vs -18.79)
+  PPO collision rate 98.3% vs always-FORWARD 60.0%
+  PPO progress 8.53 m vs always-FORWARD 5.45 m at a 20% stop rate
+
+[save] D:\HARSHIT\UVG\checkpoints\ppo_drishti.zip
+[save] D:\HARSHIT\UVG\work\rl_train_log.npz

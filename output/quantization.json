@@ -1,0 +1,553 @@
+{
+  "generated": "2026-09-08 06:51:21",
+  "hardware": {
+    "os": "Windows 10 (10.0.26200)",
+    "python": "3.10.0",
+    "cpu": "13th Gen Intel(R) Core(TM) i5-13500HX",
+    "cpu_physical_cores": 14,
+    "cpu_logical_processors": 20,
+    "ram_gb": 31.7,
+    "torch": "2.11.0+cu128",
+    "onnxruntime": "1.23.2",
+    "onnxruntime_providers": [
+      "TensorrtExecutionProvider",
+      "CUDAExecutionProvider",
+      "CPUExecutionProvider"
+    ],
+    "cuda_available": true,
+    "gpu": "NVIDIA GeForce RTX 4050 Laptop GPU",
+    "gpu_vram_gb": 6.0,
+    "note": "GPU is shared with other agents in this build; GPU numbers may carry contention. CPU numbers were taken with the GPU idle."
+  },
+  "calibration_frames_requested": 300,
+  "eval_frames_requested": 200,
+  "eval_threads": 4,
+  "reference": "FP32 ONNX graph (already verified against PyTorch by export_onnx.py)",
+  "calibration_method_per_model": {
+    "depth_anything_v2_small": "MinMax",
+    "pidnet_s_terrain": "Percentile",
+    "trav_unc_shared": "Percentile",
+    "vpr_gem_mnv3": "Percentile",
+    "world_model": "Percentile"
+  },
+  "calibration_method_comparison": {
+    "MinMax_per_channel": 0.7728,
+    "Entropy_per_channel": 0.7784,
+    "Entropy_per_tensor": 0.7806,
+    "Percentile_per_channel": 0.803,
+    "Percentile_per_tensor": 0.7965,
+    "metric": "mIoU agreement with the FP32 ONNX student, PIDNet-S"
+  },
+  "models": [
+    {
+      "name": "depth_anything_v2_small",
+      "fp32_onnx": "D:\\HARSHIT\\UVG\\checkpoints\\onnx\\depth_anything_v2_small.onnx",
+      "fp32_mb": 99.103,
+      "variants": {
+        "fp16": {
+          "path": "D:\\HARSHIT\\UVG\\checkpoints\\onnx\\depth_anything_v2_small.fp16.onnx",
+          "method": "onnxconverter_common.float16.convert_float_to_float16",
+          "keep_io_types": false,
+          "build_seconds": 1.3,
+          "size_mb": 49.681,
+          "size_vs_fp32": 0.5013,
+          "nodes": {
+            "Conv": 31,
+            "MatMul": 96,
+            "Cast": 7
+          },
+          "status": "failed",
+          "error": "Fail: [ONNXRuntimeError] : 1 : FAIL : Load model from D:\\HARSHIT\\UVG\\checkpoints\\onnx\\depth_anything_v2_small.fp16.onnx failed:Type Error: Type parameter (T) of Optype (Concat) bound to different types (tensor(float16) and tensor(float) in node (/m/backbone/embeddings/Concat_3)."
+        },
+        "int8_dynamic": {
+          "path": "D:\\HARSHIT\\UVG\\checkpoints\\onnx\\depth_anything_v2_small.int8_dynamic.onnx",
+          "method": "onnxruntime.quantization.quantize_dynamic",
+          "weight_type": "QInt8",
+          "per_channel": false,
+          "op_types_to_quantize": [
+            "MatMul"
+          ],
+          "gemm_rewritten_to_matmul": 72,
+          "note": "Conv is deliberately excluded: ORT 1.23's CPU provider has no usable per-channel ConvInteger kernel, so conv-dominated graphs are barely touched by dynamic INT8.",
+          "build_seconds": 11.4,
+          "size_mb": 35.447,
+          "size_vs_fp32": 0.3577,
+          "nodes": {
+            "MatMulInteger": 72,
+            "DynamicQuantizeLinear": 72,
+            "Conv": 31,
+            "MatMul": 24,
+            "Cast": 72
+          },
+          "eval_seconds": 173.47,
+          "accuracy": {
+            "metric": "absolute relative error of metric-aligned depth vs FP32 ONNX",
+            "median_abs_rel": 0.029122,
+            "p95_abs_rel": 0.154685,
+            "mean_abs_rel": 0.051239,
+            "n_frames": 200,
+            "scale_a_fp32_mean": 11.03314,
+            "scale_a_quant_mean": 11.19007,
+            "d_scale_a_pct": 1.4224
+          },
+          "status": "ok"
+        },
+        "int8_static": {
+          "path": "D:\\HARSHIT\\UVG\\checkpoints\\onnx\\depth_anything_v2_small.int8_static.onnx",
+          "method": "onnxruntime.quantization.quantize_static",
+          "quant_format": "QDQ",
+          "activation_type": "QUInt8",
+          "weight_type": "QInt8",
+          "per_channel": true,
+          "calibrate_method": "MinMax",
+          "calibration_frames": 300,
+          "calibration_frames_per_clip": {
+            "clip_01": 60,
+            "clip_02": 60,
+            "clip_03": 60,
+            "clip_04": 60,
+            "clip_05": 60
+          },
+          "build_seconds": 949.9,
+          "size_mb": 26.209,
+          "size_vs_fp32": 0.2645,
+          "nodes": {
+            "QuantizeLinear": 522,
+            "DequantizeLinear": 810,
+            "Conv": 31,
+            "MatMul": 24,
+            "Gemm": 72
+          },
+          "eval_seconds": 192.04,
+          "accuracy": {
+            "metric": "absolute relative error of metric-aligned depth vs FP32 ONNX",
+            "median_abs_rel": 0.498816,
+            "p95_abs_rel": 3.29286,
+            "mean_abs_rel": 0.90449,
+            "n_frames": 200,
+            "scale_a_fp32_mean": 11.03314,
+            "scale_a_quant_mean": 10.71938,
+            "d_scale_a_pct": -2.8438
+          },
+          "status": "ok"
+        }
+      },
+      "fp32_nodes": {
+        "Conv": 31,
+        "MatMul": 96,
+        "Cast": 7
+      },
+      "status": "ok",
+      "input_source": {
+        "value": "unknown"
+      },
+      "eval_frames": 200,
+      "fp32_eval_seconds": 303.16
+    },
+    {
+      "name": "pidnet_s_terrain",
+      "fp32_onnx": "D:\\HARSHIT\\UVG\\checkpoints\\onnx\\pidnet_s_terrain.onnx",
+      "fp32_mb": 30.544,
+      "variants": {
+        "fp16": {
+          "path": "D:\\HARSHIT\\UVG\\checkpoints\\onnx\\pidnet_s_terrain.fp16.onnx",
+          "method": "onnxconverter_common.float16.convert_float_to_float16",
+          "keep_io_types": false,
+          "build_seconds": 0.3,
+          "size_mb": 15.297,
+          "size_vs_fp32": 0.5008,
+          "nodes": {
+            "Conv": 75,
+            "Cast": 2
+          },
+          "eval_seconds": 10.56,
+          "accuracy": {
+            "metric": "agreement with the FP32 ONNX student (not ground truth)",
+            "mIoU_vs_fp32": 0.99846,
+            "pixel_agreement": 0.99939,
+            "n_frames": 200,
+            "classes_present": 7
+          },
+          "status": "ok"
+        },
+        "int8_dynamic": {
+          "path": "D:\\HARSHIT\\UVG\\checkpoints\\onnx\\pidnet_s_terrain.int8_dynamic.onnx",
+          "method": "onnxruntime.quantization.quantize_dynamic",
+          "weight_type": "QInt8",
+          "per_channel": false,
+          "op_types_to_quantize": [
+            "MatMul"
+          ],
+          "gemm_rewritten_to_matmul": 0,
+          "note": "Conv is deliberately excluded: ORT 1.23's CPU provider has no usable per-channel ConvInteger kernel, so conv-dominated graphs are barely touched by dynamic INT8.",
+          "build_seconds": 2.9,
+          "size_mb": 30.551,
+          "size_vs_fp32": 1.0002,
+          "nodes": {
+            "Conv": 75
+          },
+          "eval_seconds": 10.8,
+          "accuracy": {
+            "metric": "agreement with the FP32 ONNX student (not ground truth)",
+            "mIoU_vs_fp32": 1.0,
+            "pixel_agreement": 1.0,
+            "n_frames": 200,
+            "classes_present": 7
+          },
+          "status": "ok"
+        },
+        "int8_static": {
+          "path": "D:\\HARSHIT\\UVG\\checkpoints\\onnx\\pidnet_s_terrain.int8_static.onnx",
+          "method": "onnxruntime.quantization.quantize_static",
+          "quant_format": "QDQ",
+          "activation_type": "QUInt8",
+          "weight_type": "QInt8",
+          "per_channel": true,
+          "calibrate_method": "Percentile",
+          "calibration_frames": 300,
+          "calibration_frames_per_clip": {
+            "clip_01": 60,
+            "clip_02": 60,
+            "clip_03": 60,
+            "clip_04": 60,
+            "clip_05": 60
+          },
+          "build_seconds": 442.9,
+          "size_mb": 7.987,
+          "size_vs_fp32": 0.2615,
+          "nodes": {
+            "QuantizeLinear": 150,
+            "DequantizeLinear": 310,
+            "Conv": 75
+          },
+          "eval_seconds": 6.92,
+          "accuracy": {
+            "metric": "agreement with the FP32 ONNX student (not ground truth)",
+            "mIoU_vs_fp32": 0.9159,
+            "pixel_agreement": 0.96782,
+            "n_frames": 200,
+            "classes_present": 7
+          },
+          "status": "ok"
+        }
+      },
+      "fp32_nodes": {
+        "Conv": 75,
+        "Cast": 2
+      },
+      "status": "ok",
+      "input_source": {
+        "value": "unknown"
+      },
+      "eval_frames": 200,
+      "fp32_eval_seconds": 11.16
+    },
+    {
+      "name": "trav_unc_shared",
+      "fp32_onnx": "D:\\HARSHIT\\UVG\\checkpoints\\onnx\\trav_unc_shared.onnx",
+      "fp32_mb": 4.036,
+      "variants": {
+        "fp16": {
+          "path": "D:\\HARSHIT\\UVG\\checkpoints\\onnx\\trav_unc_shared.fp16.onnx",
+          "method": "onnxconverter_common.float16.convert_float_to_float16",
+          "keep_io_types": false,
+          "build_seconds": 0.1,
+          "size_mb": 2.04,
+          "size_vs_fp32": 0.5055,
+          "nodes": {
+            "Conv": 67,
+            "Cast": 3
+          },
+          "status": "failed",
+          "error": "Fail: [ONNXRuntimeError] : 1 : FAIL : Load model from D:\\HARSHIT\\UVG\\checkpoints\\onnx\\trav_unc_shared.fp16.onnx failed:Type Error: Type (tensor(float)) of output arg (/Resize_2_output_cast_0) of node (/Resize_2) does not match expected type (tensor(float16))."
+        },
+        "int8_dynamic": {
+          "path": "D:\\HARSHIT\\UVG\\checkpoints\\onnx\\trav_unc_shared.int8_dynamic.onnx",
+          "method": "onnxruntime.quantization.quantize_dynamic",
+          "weight_type": "QInt8",
+          "per_channel": false,
+          "op_types_to_quantize": [
+            "MatMul"
+          ],
+          "gemm_rewritten_to_matmul": 0,
+          "note": "Conv is deliberately excluded: ORT 1.23's CPU provider has no usable per-channel ConvInteger kernel, so conv-dominated graphs are barely touched by dynamic INT8.",
+          "build_seconds": 0.9,
+          "size_mb": 4.05,
+          "size_vs_fp32": 1.0035,
+          "nodes": {
+            "Conv": 67
+          },
+          "eval_seconds": 1.85,
+          "accuracy": {
+            "metric": "agreement with the FP32 ONNX head (labels are pseudo-labels, not GT)",
+            "mIoU_vs_fp32": 1.0,
+            "pixel_agreement": 1.0,
+            "risk_mae": 0.0,
+            "uncertainty_raw_mae": 0.0,
+            "n_frames": 200
+          },
+          "status": "ok"
+        },
+        "int8_static": {
+          "path": "D:\\HARSHIT\\UVG\\checkpoints\\onnx\\trav_unc_shared.int8_static.onnx",
+          "method": "onnxruntime.quantization.quantize_static",
+          "quant_format": "QDQ",
+          "activation_type": "QUInt8",
+          "weight_type": "QInt8",
+          "per_channel": true,
+          "calibrate_method": "Percentile",
+          "calibration_frames": 300,
+          "calibration_frames_per_clip": {
+            "clip_01": 60,
+            "clip_02": 60,
+            "clip_03": 60,
+            "clip_04": 60,
+            "clip_05": 60
+          },
+          "build_seconds": 1260.3,
+          "size_mb": 1.373,
+          "size_vs_fp32": 0.3402,
+          "nodes": {
+            "QuantizeLinear": 156,
+            "DequantizeLinear": 287,
+            "Conv": 67
+          },
+          "eval_seconds": 2.58,
+          "accuracy": {
+            "metric": "agreement with the FP32 ONNX head (labels are pseudo-labels, not GT)",
+            "mIoU_vs_fp32": 0.33526,
+            "pixel_agreement": 0.56815,
+            "risk_mae": 0.165245,
+            "uncertainty_raw_mae": 1.144568,
+            "n_frames": 200
+          },
+          "status": "ok"
+        }
+      },
+      "fp32_nodes": {
+        "Conv": 67
+      },
+      "status": "ok",
+      "input_source": {
+        "value": "unknown",
+        "depth": "cache",
+        "seg": "cache"
+      },
+      "eval_frames": 200,
+      "fp32_eval_seconds": 1.85
+    },
+    {
+      "name": "vpr_gem_mnv3",
+      "fp32_onnx": "D:\\HARSHIT\\UVG\\checkpoints\\onnx\\vpr_gem_mnv3.onnx",
+      "fp32_mb": 1.089,
+      "variants": {
+        "fp16": {
+          "path": "D:\\HARSHIT\\UVG\\checkpoints\\onnx\\vpr_gem_mnv3.fp16.onnx",
+          "method": "onnxconverter_common.float16.convert_float_to_float16",
+          "keep_io_types": false,
+          "build_seconds": 0.0,
+          "size_mb": 0.556,
+          "size_vs_fp32": 0.5106,
+          "nodes": {
+            "Conv": 37,
+            "Gemm": 1
+          },
+          "eval_seconds": 0.73,
+          "accuracy": {
+            "metric": "descriptor fidelity vs FP32 ONNX",
+            "mean_cosine_similarity": 0.999984,
+            "top1_retrieval_agreement": 0.98,
+            "n_frames": 200
+          },
+          "status": "ok"
+        },
+        "int8_dynamic": {
+          "path": "D:\\HARSHIT\\UVG\\checkpoints\\onnx\\vpr_gem_mnv3.int8_dynamic.onnx",
+          "method": "onnxruntime.quantization.quantize_dynamic",
+          "weight_type": "QInt8",
+          "per_channel": false,
+          "op_types_to_quantize": [
+            "MatMul"
+          ],
+          "gemm_rewritten_to_matmul": 1,
+          "note": "Conv is deliberately excluded: ORT 1.23's CPU provider has no usable per-channel ConvInteger kernel, so conv-dominated graphs are barely touched by dynamic INT8.",
+          "build_seconds": 0.5,
+          "size_mb": 0.903,
+          "size_vs_fp32": 0.8292,
+          "nodes": {
+            "MatMulInteger": 1,
+            "DynamicQuantizeLinear": 1,
+            "Conv": 37,
+            "Cast": 1
+          },
+          "eval_seconds": 0.56,
+          "accuracy": {
+            "metric": "descriptor fidelity vs FP32 ONNX",
+            "mean_cosine_similarity": 0.999633,
+            "top1_retrieval_agreement": 0.99,
+            "n_frames": 200
+          },
+          "status": "ok"
+        },
+        "int8_static": {
+          "path": "D:\\HARSHIT\\UVG\\checkpoints\\onnx\\vpr_gem_mnv3.int8_static.onnx",
+          "method": "onnxruntime.quantization.quantize_static",
+          "quant_format": "QDQ",
+          "activation_type": "QUInt8",
+          "weight_type": "QInt8",
+          "per_channel": true,
+          "calibrate_method": "Percentile",
+          "calibration_frames": 300,
+          "calibration_frames_per_clip": {
+            "clip_01": 60,
+            "clip_02": 60,
+            "clip_03": 60,
+            "clip_04": 60,
+            "clip_05": 60
+          },
+          "build_seconds": 38.1,
+          "size_mb": 0.453,
+          "size_vs_fp32": 0.416,
+          "nodes": {
+            "QuantizeLinear": 86,
+            "DequantizeLinear": 162,
+            "Conv": 37,
+            "Gemm": 1
+          },
+          "eval_seconds": 0.72,
+          "accuracy": {
+            "metric": "descriptor fidelity vs FP32 ONNX",
+            "mean_cosine_similarity": 0.383398,
+            "top1_retrieval_agreement": 0.335,
+            "n_frames": 200
+          },
+          "status": "ok"
+        }
+      },
+      "fp32_nodes": {
+        "Conv": 37,
+        "Gemm": 1
+      },
+      "status": "ok",
+      "input_source": {
+        "value": "unknown",
+        "depth": "cache",
+        "seg": "cache"
+      },
+      "eval_frames": 200,
+      "fp32_eval_seconds": 0.56
+    },
+    {
+      "name": "world_model",
+      "fp32_onnx": "D:\\HARSHIT\\UVG\\checkpoints\\onnx\\world_model.onnx",
+      "fp32_mb": 2.978,
+      "variants": {
+        "fp16": {
+          "path": "D:\\HARSHIT\\UVG\\checkpoints\\onnx\\world_model.fp16.onnx",
+          "method": "onnxconverter_common.float16.convert_float_to_float16",
+          "keep_io_types": false,
+          "build_seconds": 0.1,
+          "size_mb": 1.511,
+          "size_vs_fp32": 0.5074,
+          "nodes": {
+            "Conv": 4,
+            "MatMul": 8,
+            "Gemm": 37
+          },
+          "eval_seconds": 0.59,
+          "accuracy": {
+            "metric": "rollout fidelity vs FP32 ONNX",
+            "occupancy_mae": 7.2e-05,
+            "trav_forecast_mae": 8.9e-05,
+            "collision_risk_mae": 9e-05,
+            "safest_action_agreement": 1.0,
+            "n_frames": 200
+          },
+          "status": "ok"
+        },
+        "int8_dynamic": {
+          "path": "D:\\HARSHIT\\UVG\\checkpoints\\onnx\\world_model.int8_dynamic.onnx",
+          "method": "onnxruntime.quantization.quantize_dynamic",
+          "weight_type": "QInt8",
+          "per_channel": false,
+          "op_types_to_quantize": [
+            "MatMul"
+          ],
+          "gemm_rewritten_to_matmul": 41,
+          "note": "Conv is deliberately excluded: ORT 1.23's CPU provider has no usable per-channel ConvInteger kernel, so conv-dominated graphs are barely touched by dynamic INT8.",
+          "build_seconds": 1.3,
+          "size_mb": 1.111,
+          "size_vs_fp32": 0.3731,
+          "nodes": {
+            "MatMulInteger": 42,
+            "DynamicQuantizeLinear": 32,
+            "Conv": 4,
+            "MatMul": 1,
+            "Cast": 42
+          },
+          "eval_seconds": 0.33,
+          "accuracy": {
+            "metric": "rollout fidelity vs FP32 ONNX",
+            "occupancy_mae": 0.000486,
+            "trav_forecast_mae": 0.000558,
+            "collision_risk_mae": 0.000767,
+            "safest_action_agreement": 1.0,
+            "n_frames": 200
+          },
+          "status": "ok"
+        },
+        "int8_static": {
+          "path": "D:\\HARSHIT\\UVG\\checkpoints\\onnx\\world_model.int8_static.onnx",
+          "method": "onnxruntime.quantization.quantize_static",
+          "quant_format": "QDQ",
+          "activation_type": "QUInt8",
+          "weight_type": "QInt8",
+          "per_channel": true,
+          "calibrate_method": "Percentile",
+          "calibration_frames": 300,
+          "calibration_frames_per_clip": {
+            "clip_01": 60,
+            "clip_02": 60,
+            "clip_03": 60,
+            "clip_04": 60,
+            "clip_05": 60
+          },
+          "build_seconds": 487.6,
+          "size_mb": 1.2,
+          "size_vs_fp32": 0.403,
+          "nodes": {
+            "QuantizeLinear": 316,
+            "DequantizeLinear": 403,
+            "Conv": 4,
+            "MatMul": 2,
+            "Gemm": 41
+          },
+          "eval_seconds": 0.42,
+          "accuracy": {
+            "metric": "rollout fidelity vs FP32 ONNX",
+            "occupancy_mae": 0.001717,
+            "trav_forecast_mae": 0.001894,
+            "collision_risk_mae": 0.002568,
+            "safest_action_agreement": 1.0,
+            "n_frames": 200
+          },
+          "status": "ok"
+        }
+      },
+      "fp32_nodes": {
+        "Conv": 4,
+        "MatMul": 8,
+        "Gemm": 37
+      },
+      "status": "ok",
+      "input_source": {
+        "value": "unknown",
+        "depth": "cache",
+        "seg": "cache",
+        "bev": "cache"
+      },
+      "eval_frames": 200,
+      "fp32_eval_seconds": 0.46
+    }
+  ]
+}

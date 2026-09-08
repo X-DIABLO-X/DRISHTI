@@ -1,0 +1,265 @@
+D:\HARSHIT\UVG\drishti\training\train_trav_unc.py:375: UserWarning: Detected call of `lr_scheduler.step()` before `optimizer.step()`. In PyTorch 1.1.0 and later, you should call them in the opposite order: `optimizer.step()` before `lr_scheduler.step()`.  Failure to do this will result in PyTorch skipping the first value of the learning rate schedule. See more details at https://pytorch.org/docs/stable/optim.html#how-to-adjust-learning-rate
+  sched.step()
+D:\HARSHIT\UVG\drishti\training\train_trav_unc.py:376: UserWarning: Converting a tensor with requires_grad=True to a scalar may lead to unexpected behavior.
+Consider using tensor.detach() first. (Triggered internally at C:\actions-runner\_work\pytorch\pytorch\pytorch\torch\csrc\autograd\generated\python_variable_methods.cpp:837.)
+  agg += np.array([float(loss), float(l_ce), float(l_dice), float(l_risk), float(l_unc)])
+device=cuda  samples=248  net=180x320  in_ch=17
+train 192  val 56 (trailing temporal block per clip)
+unc target std: depth 0.0893  seg 0.2629
+class weights (safe/risky/obstacle/unknown): 1.69 1.30 0.81 0.63
+params: trunk 969,776  trav_head 21,077  unc_head 13,954  total 1,004,807
+ep   1/40  loss 5.3064  ce 1.2134  dice 0.6983  risk 0.5010  unc 3.4433  lr 3.00e-04
+ep   2/40  loss 4.1755  ce 0.9693  dice 0.5975  risk 0.4750  unc 2.6225  lr 2.98e-04
+ep   3/40  loss 3.6125  ce 0.8506  dice 0.5401  risk 0.4549  unc 2.2189  lr 2.96e-04
+ep   4/40  loss 3.2104  ce 0.7567  dice 0.4901  risk 0.4336  unc 1.9484  lr 2.93e-04
+ep   5/40  loss 2.8977  ce 0.6897  dice 0.4496  risk 0.4129  unc 1.7354  lr 2.89e-04  | val mIoU 0.585  acc 0.764  rho_d -0.062  rho_s 0.221
+ep   6/40  loss 2.6520  ce 0.6398  dice 0.4169  risk 0.3933  unc 1.5678  lr 2.84e-04
+ep   7/40  loss 2.4435  ce 0.6022  dice 0.3918  risk 0.3765  unc 1.4196  lr 2.78e-04
+ep   8/40  loss 2.2844  ce 0.5648  dice 0.3674  risk 0.3615  unc 1.3190  lr 2.72e-04
+ep   9/40  loss 2.1231  ce 0.5412  dice 0.3499  risk 0.3486  unc 1.1977  lr 2.65e-04
+ep  10/40  loss 1.9876  ce 0.5201  dice 0.3357  risk 0.3381  unc 1.0968  lr 2.57e-04  | val mIoU 0.655  acc 0.817  rho_d 0.064  rho_s 0.331
+ep  11/40  loss 1.8958  ce 0.4954  dice 0.3190  risk 0.3276  unc 1.0442  lr 2.48e-04
+ep  12/40  loss 1.8083  ce 0.4823  dice 0.3082  risk 0.3203  unc 0.9798  lr 2.39e-04
+ep  13/40  loss 1.7341  ce 0.4669  dice 0.2978  risk 0.3124  unc 0.9309  lr 2.30e-04
+ep  14/40  loss 1.6614  ce 0.4479  dice 0.2855  risk 0.3059  unc 0.8872  lr 2.20e-04
+ep  15/40  loss 1.5948  ce 0.4355  dice 0.2765  risk 0.3004  unc 0.8409  lr 2.09e-04  | val mIoU 0.678  acc 0.833  rho_d 0.178  rho_s 0.381
+ep  16/40  loss 1.5505  ce 0.4243  dice 0.2689  risk 0.2951  unc 0.8146  lr 1.98e-04
+ep  17/40  loss 1.5133  ce 0.4103  dice 0.2597  risk 0.2908  unc 0.7987  lr 1.87e-04
+ep  18/40  loss 1.4837  ce 0.4077  dice 0.2565  risk 0.2888  unc 0.7745  lr 1.76e-04
+ep  19/40  loss 1.4483  ce 0.3938  dice 0.2476  risk 0.2851  unc 0.7597  lr 1.65e-04
+ep  20/40  loss 1.4059  ce 0.3887  dice 0.2445  risk 0.2824  unc 0.7256  lr 1.53e-04  | val mIoU 0.692  acc 0.842  rho_d 0.210  rho_s 0.416
+ep  21/40  loss 1.3833  ce 0.3790  dice 0.2380  risk 0.2796  unc 0.7175  lr 1.41e-04
+ep  22/40  loss 1.3607  ce 0.3745  dice 0.2339  risk 0.2770  unc 0.7030  lr 1.30e-04
+ep  23/40  loss 1.3551  ce 0.3707  dice 0.2314  risk 0.2764  unc 0.7028  lr 1.19e-04
+ep  24/40  loss 1.3086  ce 0.3592  dice 0.2252  risk 0.2732  unc 0.6729  lr 1.08e-04
+ep  25/40  loss 1.3216  ce 0.3714  dice 0.2304  risk 0.2740  unc 0.6707  lr 9.67e-05  | val mIoU 0.699  acc 0.848  rho_d 0.239  rho_s 0.439
+ep  26/40  loss 1.2918  ce 0.3578  dice 0.2230  risk 0.2718  unc 0.6594  lr 8.63e-05
+ep  27/40  loss 1.2860  ce 0.3545  dice 0.2206  risk 0.2707  unc 0.6589  lr 7.62e-05
+ep  28/40  loss 1.2698  ce 0.3498  dice 0.2182  risk 0.2698  unc 0.6490  lr 6.66e-05
+ep  29/40  loss 1.2657  ce 0.3503  dice 0.2177  risk 0.2690  unc 0.6452  lr 5.75e-05
+ep  30/40  loss 1.2529  ce 0.3427  dice 0.2140  risk 0.2680  unc 0.6424  lr 4.91e-05  | val mIoU 0.702  acc 0.850  rho_d 0.275  rho_s 0.460
+ep  31/40  loss 1.2557  ce 0.3429  dice 0.2136  risk 0.2683  unc 0.6451  lr 4.12e-05
+ep  32/40  loss 1.2377  ce 0.3402  dice 0.2116  risk 0.2670  unc 0.6314  lr 3.41e-05
+ep  33/40  loss 1.2410  ce 0.3434  dice 0.2127  risk 0.2670  unc 0.6311  lr 2.77e-05
+ep  34/40  loss 1.2340  ce 0.3417  dice 0.2118  risk 0.2672  unc 0.6261  lr 2.20e-05
+ep  35/40  loss 1.2247  ce 0.3389  dice 0.2110  risk 0.2668  unc 0.6202  lr 1.72e-05  | val mIoU 0.703  acc 0.851  rho_d 0.291  rho_s 0.469
+ep  36/40  loss 1.2297  ce 0.3357  dice 0.2092  risk 0.2660  unc 0.6299  lr 1.32e-05
+ep  37/40  loss 1.2334  ce 0.3390  dice 0.2106  risk 0.2664  unc 0.6292  lr 1.01e-05
+ep  38/40  loss 1.2200  ce 0.3385  dice 0.2103  risk 0.2664  unc 0.6164  lr 7.81e-06
+ep  39/40  loss 1.2271  ce 0.3347  dice 0.2085  risk 0.2657  unc 0.6288  lr 6.45e-06
+ep  40/40  loss 1.2223  ce 0.3409  dice 0.2114  risk 0.2664  unc 0.6159  lr 6.00e-06  | val mIoU 0.703  acc 0.851  rho_d 0.287  rho_s 0.472
+[calib] depth: a=15.37 b=-0.49  val ECE 0.0760  conf p05/p50/p95 0.055/0.239/0.409  base rate 0.248
+[calib] seg: a=7.95 b=1.17  val ECE 0.0483  conf p05/p50/p95 0.301/0.760/0.887  base rate 0.748
+{
+  "checkpoint": "D:\\HARSHIT\\UVG\\checkpoints\\trav_unc_shared.pt",
+  "epochs": 40,
+  "batch": 8,
+  "device": "cuda",
+  "train_samples": 192,
+  "val_samples": 56,
+  "train_seconds": 225.4,
+  "peak_vram_mb": 252.5,
+  "n_params": {
+    "trunk": 969776,
+    "trav_head": 21077,
+    "unc_head": 13954,
+    "total": 1004807
+  },
+  "final_val_metrics_vs_PSEUDO_LABELS": {
+    "pixel_acc_vs_pseudo": 0.8513971017323987,
+    "mIoU_vs_pseudo": 0.7034984862139447,
+    "risk_mae": 0.09747404995493372,
+    "IoU_safe": 0.589670153881238,
+    "IoU_risky": 0.5287462886247081,
+    "IoU_obstacle": 0.8028217987420558,
+    "IoU_unknown": 0.8927557036077771,
+    "spearman_depth_err": 0.28668379824517803,
+    "mae_depth_err": 0.05373441427946091,
+    "spearman_seg_err": 0.4715274217498011,
+    "mae_seg_err": 0.19433468580245972,
+    "confidence_calibration": {
+      "depth": {
+        "tolerance": 0.08,
+        "platt_a": 15.368939960781509,
+        "platt_b": -0.4943196172994283,
+        "val_ece": 0.07602144158687761,
+        "val_base_rate_error_below_tol": 0.248155,
+        "val_conf_mean": 0.23877942562103271,
+        "val_conf_p05": 0.054922524839639664,
+        "val_conf_p50": 0.23902155458927155,
+        "val_conf_p95": 0.40853509306907654,
+        "val_spearman_pred_vs_true_error": 0.28659186169357026,
+        "reliability_bins": [
+          {
+            "bin": [
+              0.0,
+              0.1
+            ],
+            "n_frac": 0.09003333333333334,
+            "mean_conf": 0.047743091370595285,
+            "empirical": 0.2575897815623843
+          },
+          {
+            "bin": [
+              0.1,
+              0.2
+            ],
+            "n_frac": 0.24154666666666666,
+            "mean_conf": 0.15997621511313986,
+            "empirical": 0.14374724000883196
+          },
+          {
+            "bin": [
+              0.2,
+              0.30000000000000004
+            ],
+            "n_frac": 0.40731333333333336,
+            "mean_conf": 0.24801839920021515,
+            "empirical": 0.17583105553464162
+          },
+          {
+            "bin": [
+              0.30000000000000004,
+              0.4
+            ],
+            "n_frac": 0.20212166666666667,
+            "mean_conf": 0.34119409115624144,
+            "empirical": 0.3780973506056583
+          },
+          {
+            "bin": [
+              0.4,
+              0.5
+            ],
+            "n_frac": 0.05682,
+            "mean_conf": 0.43515859824886877,
+            "empirical": 0.7146251319957762
+          },
+          {
+            "bin": [
+              0.5,
+              0.6000000000000001
+            ],
+            "n_frac": 0.0021016666666666666,
+            "mean_conf": 0.5188247248542205,
+            "empirical": 0.7359238699444886
+          },
+          {
+            "bin": [
+              0.6000000000000001,
+              0.7000000000000001
+            ],
+            "n_frac": 6.333333333333333e-05,
+            "mean_conf": 0.6187045621244531,
+            "empirical": 0.7894736842105263
+          }
+        ]
+      },
+      "seg": {
+        "tolerance": 0.2,
+        "platt_a": 7.949966592160444,
+        "platt_b": 1.1745828647981122,
+        "val_ece": 0.048332322165785924,
+        "val_base_rate_error_below_tol": 0.7480683333333333,
+        "val_conf_mean": 0.6997358798980713,
+        "val_conf_p05": 0.30129167437553406,
+        "val_conf_p50": 0.7601891756057739,
+        "val_conf_p95": 0.8873715400695801,
+        "val_spearman_pred_vs_true_error": 0.4696048111048902,
+        "reliability_bins": [
+          {
+            "bin": [
+              0.0,
+              0.1
+            ],
+            "n_frac": 0.010896666666666667,
+            "mean_conf": 0.053666669020132285,
+            "empirical": 0.3871214438666259
+          },
+          {
+            "bin": [
+              0.1,
+              0.2
+            ],
+            "n_frac": 0.01591,
+            "mean_conf": 0.1528103344037851,
+            "empirical": 0.48721977791745236
+          },
+          {
+            "bin": [
+              0.2,
+              0.30000000000000004
+            ],
+            "n_frac": 0.02286,
+            "mean_conf": 0.25322952032845375,
+            "empirical": 0.5049577136191309
+          },
+          {
+            "bin": [
+              0.30000000000000004,
+              0.4
+            ],
+            "n_frac": 0.035908333333333334,
+            "mean_conf": 0.35366330983799776,
+            "empirical": 0.533070317939197
+          },
+          {
+            "bin": [
+              0.4,
+              0.5
+            ],
+            "n_frac": 0.05492333333333333,
+            "mean_conf": 0.4540441506844944,
+            "empirical": 0.5768040298598046
+          },
+          {
+            "bin": [
+              0.5,
+              0.6000000000000001
+            ],
+            "n_frac": 0.08631666666666667,
+            "mean_conf": 0.5536900368188427,
+            "empirical": 0.6252944583896505
+          },
+          {
+            "bin": [
+              0.6000000000000001,
+              0.7000000000000001
+            ],
+            "n_frac": 0.141355,
+            "mean_conf": 0.6543470247358025,
+            "empirical": 0.6828788039569406
+          },
+          {
+            "bin": [
+              0.7000000000000001,
+              0.8
+            ],
+            "n_frac": 0.25253166666666665,
+            "mean_conf": 0.7553618980537096,
+            "empirical": 0.7567169793887235
+          },
+          {
+            "bin": [
+              0.8,
+              0.9
+            ],
+            "n_frac": 0.3605466666666667,
+            "mean_conf": 0.8466598992213744,
+            "empirical": 0.8699151288783699
+          },
+          {
+            "bin": [
+              0.9,
+              1.0
+            ],
+            "n_frac": 0.018751666666666666,
+            "mean_conf": 0.9062127977591092,
+            "empirical": 0.9861345658163719
+          }
+        ]
+      }
+    }
+  },
+  "caveat": "IoU / accuracy are agreement with the geometric pseudo-labels on a held-out temporal block of the SAME five clips. Not ground truth, and optimistic about cross-scene generalisation."
+}

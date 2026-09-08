@@ -1,0 +1,62 @@
+[distill] 1181 train / 169 val frames  input 512x288  student out 64x36  loss res 256x144
+[distill] class weights: sky=1.00, trail=0.58, grass=1.32, rough_veg=0.77, obstacle=0.69, water=3.00, dynamic=3.00
+[distill] PIDNet-S params 7,717,839
+D:\HARSHIT\UVG\drishti\training\distill_seg.py:361: UserWarning: Detected call of `lr_scheduler.step()` before `optimizer.step()`. In PyTorch 1.1.0 and later, you should call them in the opposite order: `optimizer.step()` before `lr_scheduler.step()`.  Failure to do this will result in PyTorch skipping the first value of the learning rate schedule. See more details at https://pytorch.org/docs/stable/optim.html#how-to-adjust-learning-rate
+  sched.step()
+D:\HARSHIT\UVG\drishti\training\distill_seg.py:363: UserWarning: Converting a tensor with requires_grad=True to a scalar may lead to unexpected behavior.
+Consider using tensor.detach() first. (Triggered internally at C:\actions-runner\_work\pytorch\pytorch\pytorch\torch\csrc\autograd\generated\python_variable_methods.cpp:837.)
+  agg += [float(loss), float(l_kd), float(l_ohem), float(l_aux),
+ep   1/40  loss 22.788 (kd 3.637 ohem 7.020 aux 5.870 bd 0.1932 bdce 2.281)  val agree-mIoU 36.16  acc 66.20  lr 3.02e-04  46s
+ep   2/40  loss  8.668 (kd 1.099 ohem 2.578 aux 1.924 bd 0.1052 bdce 1.018)  val agree-mIoU 48.42  acc 78.83  lr 6.00e-04  24s
+ep   3/40  loss  7.569 (kd 0.870 ohem 2.279 aux 1.711 bd 0.0966 bdce 0.934)  val agree-mIoU 54.06  acc 82.40  lr 5.99e-04  24s
+ep   4/40  loss  7.122 (kd 0.781 ohem 2.130 aux 1.686 bd 0.0928 bdce 0.900)  val agree-mIoU 49.77  acc 80.28  lr 5.96e-04  23s
+ep   5/40  loss  6.633 (kd 0.704 ohem 1.958 aux 1.545 bd 0.0895 bdce 0.857)  val agree-mIoU 51.17  acc 80.35  lr 5.91e-04  24s
+ep   6/40  loss  6.346 (kd 0.649 ohem 1.830 aux 1.538 bd 0.0882 bdce 0.837)  val agree-mIoU 50.70  acc 81.12  lr 5.84e-04  32s
+ep   7/40  loss  6.196 (kd 0.620 ohem 1.816 aux 1.503 bd 0.0858 bdce 0.823)  val agree-mIoU 53.17  acc 80.75  lr 5.75e-04  36s
+ep   8/40  loss  6.028 (kd 0.601 ohem 1.739 aux 1.473 bd 0.0843 bdce 0.812)  val agree-mIoU 56.06  acc 82.48  lr 5.64e-04  23s
+ep   9/40  loss  5.897 (kd 0.577 ohem 1.689 aux 1.443 bd 0.0838 bdce 0.801)  val agree-mIoU 56.45  acc 84.01  lr 5.51e-04  26s
+ep  10/40  loss  5.777 (kd 0.542 ohem 1.690 aux 1.434 bd 0.0819 bdce 0.791)  val agree-mIoU 54.84  acc 82.45  lr 5.37e-04  20s
+ep  11/40  loss  5.589 (kd 0.520 ohem 1.586 aux 1.401 bd 0.0811 bdce 0.780)  val agree-mIoU 57.84  acc 84.29  lr 5.21e-04  19s
+ep  12/40  loss  5.465 (kd 0.505 ohem 1.552 aux 1.395 bd 0.0793 bdce 0.758)  val agree-mIoU 54.53  acc 84.42  lr 5.03e-04  18s
+ep  13/40  loss  5.333 (kd 0.475 ohem 1.506 aux 1.369 bd 0.0790 bdce 0.750)  val agree-mIoU 58.44  acc 84.82  lr 4.84e-04  20s
+ep  14/40  loss  5.203 (kd 0.454 ohem 1.462 aux 1.346 bd 0.0777 bdce 0.741)  val agree-mIoU 60.60  acc 86.44  lr 4.64e-04  18s
+ep  15/40  loss  5.166 (kd 0.451 ohem 1.442 aux 1.330 bd 0.0776 bdce 0.738)  val agree-mIoU 60.84  acc 86.84  lr 4.43e-04  22s
+ep  16/40  loss  5.003 (kd 0.425 ohem 1.396 aux 1.296 bd 0.0758 bdce 0.723)  val agree-mIoU 60.53  acc 87.14  lr 4.21e-04  34s
+ep  17/40  loss  5.030 (kd 0.430 ohem 1.408 aux 1.309 bd 0.0757 bdce 0.724)  val agree-mIoU 61.12  acc 87.09  lr 3.98e-04  34s
+ep  18/40  loss  4.940 (kd 0.412 ohem 1.376 aux 1.301 bd 0.0751 bdce 0.717)  val agree-mIoU 61.01  acc 87.32  lr 3.74e-04  31s
+ep  19/40  loss  4.821 (kd 0.390 ohem 1.333 aux 1.285 bd 0.0745 bdce 0.704)  val agree-mIoU 60.17  acc 86.62  lr 3.50e-04  25s
+ep  20/40  loss  4.771 (kd 0.381 ohem 1.318 aux 1.296 bd 0.0739 bdce 0.696)  val agree-mIoU 61.30  acc 87.41  lr 3.25e-04  25s
+ep  21/40  loss  4.675 (kd 0.370 ohem 1.268 aux 1.261 bd 0.0735 bdce 0.694)  val agree-mIoU 61.60  acc 86.58  lr 3.00e-04  26s
+ep  22/40  loss  4.645 (kd 0.359 ohem 1.290 aux 1.266 bd 0.0722 bdce 0.688)  val agree-mIoU 62.13  acc 87.01  lr 2.76e-04  28s
+ep  23/40  loss  4.500 (kd 0.348 ohem 1.202 aux 1.219 bd 0.0717 bdce 0.681)  val agree-mIoU 64.27  acc 88.54  lr 2.51e-04  26s
+ep  24/40  loss  4.391 (kd 0.332 ohem 1.158 aux 1.198 bd 0.0709 bdce 0.671)  val agree-mIoU 63.37  acc 88.52  lr 2.27e-04  23s
+ep  25/40  loss  4.476 (kd 0.337 ohem 1.218 aux 1.225 bd 0.0712 bdce 0.669)  val agree-mIoU 60.87  acc 86.99  lr 2.03e-04  21s
+ep  26/40  loss  4.321 (kd 0.325 ohem 1.125 aux 1.207 bd 0.0700 bdce 0.662)  val agree-mIoU 64.04  acc 88.89  lr 1.80e-04  22s
+ep  27/40  loss  4.289 (kd 0.317 ohem 1.118 aux 1.193 bd 0.0701 bdce 0.657)  val agree-mIoU 64.41  acc 88.77  lr 1.58e-04  21s
+ep  28/40  loss  4.235 (kd 0.311 ohem 1.104 aux 1.184 bd 0.0693 bdce 0.651)  val agree-mIoU 63.91  acc 88.10  lr 1.36e-04  19s
+ep  29/40  loss  4.169 (kd 0.301 ohem 1.089 aux 1.174 bd 0.0681 bdce 0.646)  val agree-mIoU 65.35  acc 88.60  lr 1.16e-04  19s
+ep  30/40  loss  4.114 (kd 0.290 ohem 1.063 aux 1.169 bd 0.0681 bdce 0.642)  val agree-mIoU 65.48  acc 89.14  lr 9.73e-05  21s
+ep  31/40  loss  4.115 (kd 0.289 ohem 1.067 aux 1.168 bd 0.0680 bdce 0.642)  val agree-mIoU 66.18  acc 89.56  lr 7.98e-05  21s
+ep  32/40  loss  4.085 (kd 0.284 ohem 1.050 aux 1.180 bd 0.0679 bdce 0.637)  val agree-mIoU 65.37  acc 88.65  lr 6.38e-05  22s
+ep  33/40  loss  4.047 (kd 0.278 ohem 1.048 aux 1.141 bd 0.0675 bdce 0.637)  val agree-mIoU 66.83  acc 89.64  lr 4.94e-05  24s
+ep  34/40  loss  4.012 (kd 0.274 ohem 1.028 aux 1.155 bd 0.0672 bdce 0.630)  val agree-mIoU 66.17  acc 89.32  lr 3.67e-05  25s
+ep  35/40  loss  4.003 (kd 0.272 ohem 1.026 aux 1.139 bd 0.0673 bdce 0.632)  val agree-mIoU 65.78  acc 89.06  lr 2.58e-05  22s
+ep  36/40  loss  3.976 (kd 0.266 ohem 1.026 aux 1.155 bd 0.0664 bdce 0.628)  val agree-mIoU 66.12  acc 89.32  lr 1.68e-05  21s
+ep  37/40  loss  3.972 (kd 0.267 ohem 1.012 aux 1.147 bd 0.0668 bdce 0.630)  val agree-mIoU 65.31  acc 89.31  lr 9.77e-06  24s
+ep  38/40  loss  3.956 (kd 0.264 ohem 1.014 aux 1.137 bd 0.0667 bdce 0.626)  val agree-mIoU 66.48  acc 89.66  lr 4.69e-06  25s
+ep  39/40  loss  3.964 (kd 0.268 ohem 1.016 aux 1.132 bd 0.0665 bdce 0.628)  val agree-mIoU 66.80  acc 89.78  lr 1.62e-06  25s
+ep  40/40  loss  3.949 (kd 0.264 ohem 1.018 aux 1.136 bd 0.0662 bdce 0.625)  val agree-mIoU 66.29  acc 89.56  lr 6.00e-07  27s
+[distill] peak VRAM 590 MiB
+
+[distill] best epoch 33  saved -> D:\HARSHIT\UVG\checkpoints\pidnet_s_drishti7.pt
+[distill] FINAL teacher-agreement mIoU (held-out 169 frames): 66.83%   pixel agreement 89.64%
+[distill] per-class agreement IoU (student vs SegFormer teacher label):
+   sky         86.18%
+   trail       90.57%
+   grass       70.31%
+   rough_veg   76.20%
+   obstacle    74.28%
+   water        3.58%
+   dynamic     66.67%
+[distill] total wall time 16.4 min on cuda
+[distill] history -> D:\HARSHIT\UVG\logs\distill_seg_history.json

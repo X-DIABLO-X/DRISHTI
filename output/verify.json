@@ -1,0 +1,647 @@
+[
+  {
+    "path": "01_depth_anything_v2\\clip_01.mp4",
+    "ok": true,
+    "notes": [],
+    "mb": 5.31,
+    "frames": 300,
+    "size": "1280x720",
+    "fps": 30.0,
+    "luma": 54.1,
+    "detail": 56.4,
+    "motion": 6.41
+  },
+  {
+    "path": "01_depth_anything_v2\\clip_02.mp4",
+    "ok": true,
+    "notes": [],
+    "mb": 5.01,
+    "frames": 300,
+    "size": "1280x720",
+    "fps": 30.0,
+    "luma": 54.8,
+    "detail": 56.6,
+    "motion": 7.89
+  },
+  {
+    "path": "01_depth_anything_v2\\clip_03.mp4",
+    "ok": true,
+    "notes": [],
+    "mb": 3.49,
+    "frames": 300,
+    "size": "1280x720",
+    "fps": 30.0,
+    "luma": 55.1,
+    "detail": 55.5,
+    "motion": 6.53
+  },
+  {
+    "path": "01_depth_anything_v2\\clip_04.mp4",
+    "ok": true,
+    "notes": [],
+    "mb": 2.8,
+    "frames": 300,
+    "size": "1280x720",
+    "fps": 30.0,
+    "luma": 54.4,
+    "detail": 54.9,
+    "motion": 6.27
+  },
+  {
+    "path": "01_depth_anything_v2\\clip_05.mp4",
+    "ok": true,
+    "notes": [],
+    "mb": 3.34,
+    "frames": 300,
+    "size": "1280x720",
+    "fps": 30.0,
+    "luma": 56.1,
+    "detail": 56.6,
+    "motion": 8.07
+  },
+  {
+    "path": "02_terrain_segmentation\\clip_01.mp4",
+    "ok": true,
+    "notes": [],
+    "mb": 8.7,
+    "frames": 300,
+    "size": "1280x720",
+    "fps": 30.0,
+    "luma": 72.0,
+    "detail": 62.1,
+    "motion": 11.93
+  },
+  {
+    "path": "02_terrain_segmentation\\clip_02.mp4",
+    "ok": true,
+    "notes": [],
+    "mb": 8.07,
+    "frames": 300,
+    "size": "1280x720",
+    "fps": 30.0,
+    "luma": 72.4,
+    "detail": 61.9,
+    "motion": 12.63
+  },
+  {
+    "path": "02_terrain_segmentation\\clip_03.mp4",
+    "ok": true,
+    "notes": [],
+    "mb": 5.07,
+    "frames": 300,
+    "size": "1280x720",
+    "fps": 30.0,
+    "luma": 70.2,
+    "detail": 58.2,
+    "motion": 9.41
+  },
+  {
+    "path": "02_terrain_segmentation\\clip_04.mp4",
+    "ok": true,
+    "notes": [],
+    "mb": 3.98,
+    "frames": 300,
+    "size": "1280x720",
+    "fps": 30.0,
+    "luma": 69.0,
+    "detail": 57.8,
+    "motion": 9.15
+  },
+  {
+    "path": "02_terrain_segmentation\\clip_05.mp4",
+    "ok": true,
+    "notes": [],
+    "mb": 4.58,
+    "frames": 300,
+    "size": "1280x720",
+    "fps": 30.0,
+    "luma": 68.0,
+    "detail": 56.0,
+    "motion": 10.92
+  },
+  {
+    "path": "03_traversability\\clip_01.mp4",
+    "ok": true,
+    "notes": [],
+    "mb": 4.55,
+    "frames": 300,
+    "size": "1280x720",
+    "fps": 30.0,
+    "luma": 52.7,
+    "detail": 52.5,
+    "motion": 5.88
+  },
+  {
+    "path": "03_traversability\\clip_02.mp4",
+    "ok": true,
+    "notes": [],
+    "mb": 4.09,
+    "frames": 300,
+    "size": "1280x720",
+    "fps": 30.0,
+    "luma": 52.7,
+    "detail": 52.4,
+    "motion": 6.89
+  },
+  {
+    "path": "03_traversability\\clip_03.mp4",
+    "ok": true,
+    "notes": [],
+    "mb": 3.45,
+    "frames": 300,
+    "size": "1280x720",
+    "fps": 30.0,
+    "luma": 54.2,
+    "detail": 54.1,
+    "motion": 5.48
+  },
+  {
+    "path": "03_traversability\\clip_04.mp4",
+    "ok": true,
+    "notes": [],
+    "mb": 3.01,
+    "frames": 300,
+    "size": "1280x720",
+    "fps": 30.0,
+    "luma": 52.8,
+    "detail": 52.9,
+    "motion": 5.55
+  },
+  {
+    "path": "03_traversability\\clip_05.mp4",
+    "ok": true,
+    "notes": [],
+    "mb": 3.33,
+    "frames": 300,
+    "size": "1280x720",
+    "fps": 30.0,
+    "luma": 54.5,
+    "detail": 54.5,
+    "motion": 6.6
+  },
+  {
+    "path": "04_visual_odometry\\clip_01.mp4",
+    "ok": true,
+    "notes": [],
+    "mb": 9.61,
+    "frames": 300,
+    "size": "1280x720",
+    "fps": 30.0,
+    "luma": 40.4,
+    "detail": 38.3,
+    "motion": 8.52
+  },
+  {
+    "path": "04_visual_odometry\\clip_02.mp4",
+    "ok": true,
+    "notes": [],
+    "mb": 9.67,
+    "frames": 300,
+    "size": "1280x720",
+    "fps": 30.0,
+    "luma": 41.9,
+    "detail": 39.2,
+    "motion": 9.7
+  },
+  {
+    "path": "04_visual_odometry\\clip_03.mp4",
+    "ok": true,
+    "notes": [],
+    "mb": 6.61,
+    "frames": 300,
+    "size": "1280x720",
+    "fps": 30.0,
+    "luma": 40.5,
+    "detail": 35.5,
+    "motion": 7.46
+  },
+  {
+    "path": "04_visual_odometry\\clip_04.mp4",
+    "ok": true,
+    "notes": [],
+    "mb": 6.2,
+    "frames": 300,
+    "size": "1280x720",
+    "fps": 30.0,
+    "luma": 40.2,
+    "detail": 35.6,
+    "motion": 7.81
+  },
+  {
+    "path": "04_visual_odometry\\clip_05.mp4",
+    "ok": true,
+    "notes": [],
+    "mb": 6.3,
+    "frames": 300,
+    "size": "1280x720",
+    "fps": 30.0,
+    "luma": 39.4,
+    "detail": 35.2,
+    "motion": 9.21
+  },
+  {
+    "path": "05_place_recognition\\clip_01.mp4",
+    "ok": true,
+    "notes": [],
+    "mb": 9.98,
+    "frames": 300,
+    "size": "1280x720",
+    "fps": 30.0,
+    "luma": 61.6,
+    "detail": 56.4,
+    "motion": 17.8
+  },
+  {
+    "path": "05_place_recognition\\clip_02.mp4",
+    "ok": true,
+    "notes": [],
+    "mb": 10.34,
+    "frames": 300,
+    "size": "1280x720",
+    "fps": 30.0,
+    "luma": 67.6,
+    "detail": 60.7,
+    "motion": 16.27
+  },
+  {
+    "path": "05_place_recognition\\clip_03.mp4",
+    "ok": true,
+    "notes": [],
+    "mb": 6.31,
+    "frames": 300,
+    "size": "1280x720",
+    "fps": 30.0,
+    "luma": 63.7,
+    "detail": 54.1,
+    "motion": 14.07
+  },
+  {
+    "path": "05_place_recognition\\clip_04.mp4",
+    "ok": true,
+    "notes": [],
+    "mb": 5.8,
+    "frames": 300,
+    "size": "1280x720",
+    "fps": 30.0,
+    "luma": 62.6,
+    "detail": 52.6,
+    "motion": 14.91
+  },
+  {
+    "path": "05_place_recognition\\clip_05.mp4",
+    "ok": true,
+    "notes": [],
+    "mb": 6.19,
+    "frames": 300,
+    "size": "1280x720",
+    "fps": 30.0,
+    "luma": 59.1,
+    "detail": 50.5,
+    "motion": 16.09
+  },
+  {
+    "path": "06_uncertainty\\clip_01.mp4",
+    "ok": true,
+    "notes": [],
+    "mb": 6.31,
+    "frames": 300,
+    "size": "1280x720",
+    "fps": 30.0,
+    "luma": 55.0,
+    "detail": 52.1,
+    "motion": 9.95
+  },
+  {
+    "path": "06_uncertainty\\clip_02.mp4",
+    "ok": true,
+    "notes": [],
+    "mb": 5.67,
+    "frames": 300,
+    "size": "1280x720",
+    "fps": 30.0,
+    "luma": 56.9,
+    "detail": 54.2,
+    "motion": 9.35
+  },
+  {
+    "path": "06_uncertainty\\clip_03.mp4",
+    "ok": true,
+    "notes": [],
+    "mb": 4.51,
+    "frames": 300,
+    "size": "1280x720",
+    "fps": 30.0,
+    "luma": 51.7,
+    "detail": 47.1,
+    "motion": 6.37
+  },
+  {
+    "path": "06_uncertainty\\clip_04.mp4",
+    "ok": true,
+    "notes": [],
+    "mb": 4.15,
+    "frames": 300,
+    "size": "1280x720",
+    "fps": 30.0,
+    "luma": 52.5,
+    "detail": 48.1,
+    "motion": 7.4
+  },
+  {
+    "path": "06_uncertainty\\clip_05.mp4",
+    "ok": true,
+    "notes": [],
+    "mb": 4.3,
+    "frames": 300,
+    "size": "1280x720",
+    "fps": 30.0,
+    "luma": 49.8,
+    "detail": 45.0,
+    "motion": 7.13
+  },
+  {
+    "path": "07_lidar_like_pointcloud\\clip_01.mp4",
+    "ok": true,
+    "notes": [],
+    "mb": 12.49,
+    "frames": 300,
+    "size": "1280x720",
+    "fps": 30.0,
+    "luma": 35.0,
+    "detail": 39.8,
+    "motion": 7.76
+  },
+  {
+    "path": "07_lidar_like_pointcloud\\clip_02.mp4",
+    "ok": true,
+    "notes": [],
+    "mb": 10.87,
+    "frames": 300,
+    "size": "1280x720",
+    "fps": 30.0,
+    "luma": 35.4,
+    "detail": 40.4,
+    "motion": 8.11
+  },
+  {
+    "path": "07_lidar_like_pointcloud\\clip_03.mp4",
+    "ok": true,
+    "notes": [],
+    "mb": 10.87,
+    "frames": 300,
+    "size": "1280x720",
+    "fps": 30.0,
+    "luma": 35.1,
+    "detail": 38.8,
+    "motion": 6.84
+  },
+  {
+    "path": "07_lidar_like_pointcloud\\clip_04.mp4",
+    "ok": true,
+    "notes": [],
+    "mb": 10.73,
+    "frames": 300,
+    "size": "1280x720",
+    "fps": 30.0,
+    "luma": 35.6,
+    "detail": 39.4,
+    "motion": 7.75
+  },
+  {
+    "path": "07_lidar_like_pointcloud\\clip_05.mp4",
+    "ok": true,
+    "notes": [],
+    "mb": 8.57,
+    "frames": 300,
+    "size": "1280x720",
+    "fps": 30.0,
+    "luma": 34.4,
+    "detail": 37.8,
+    "motion": 7.5
+  },
+  {
+    "path": "07b_lidar_3d_view\\clip_01.mp4",
+    "ok": true,
+    "notes": [],
+    "mb": 5.9,
+    "frames": 300,
+    "size": "1280x720",
+    "fps": 30.0,
+    "luma": 47.7,
+    "detail": 52.3,
+    "motion": 11.39
+  },
+  {
+    "path": "07b_lidar_3d_view\\clip_02.mp4",
+    "ok": true,
+    "notes": [],
+    "mb": 6.22,
+    "frames": 300,
+    "size": "1280x720",
+    "fps": 30.0,
+    "luma": 42.9,
+    "detail": 48.9,
+    "motion": 13.39
+  },
+  {
+    "path": "07b_lidar_3d_view\\clip_03.mp4",
+    "ok": true,
+    "notes": [],
+    "mb": 5.7,
+    "frames": 300,
+    "size": "1280x720",
+    "fps": 30.0,
+    "luma": 46.5,
+    "detail": 50.3,
+    "motion": 14.39
+  },
+  {
+    "path": "07b_lidar_3d_view\\clip_04.mp4",
+    "ok": true,
+    "notes": [],
+    "mb": 4.88,
+    "frames": 300,
+    "size": "1280x720",
+    "fps": 30.0,
+    "luma": 43.4,
+    "detail": 48.9,
+    "motion": 10.52
+  },
+  {
+    "path": "07b_lidar_3d_view\\clip_05.mp4",
+    "ok": true,
+    "notes": [],
+    "mb": 5.57,
+    "frames": 300,
+    "size": "1280x720",
+    "fps": 30.0,
+    "luma": 47.2,
+    "detail": 50.3,
+    "motion": 13.41
+  },
+  {
+    "path": "08_bev_25d_map\\clip_01.mp4",
+    "ok": true,
+    "notes": [],
+    "mb": 11.15,
+    "frames": 300,
+    "size": "1280x720",
+    "fps": 30.0,
+    "luma": 40.5,
+    "detail": 41.9,
+    "motion": 5.54
+  },
+  {
+    "path": "08_bev_25d_map\\clip_02.mp4",
+    "ok": true,
+    "notes": [],
+    "mb": 8.87,
+    "frames": 300,
+    "size": "1280x720",
+    "fps": 30.0,
+    "luma": 39.2,
+    "detail": 40.4,
+    "motion": 5.41
+  },
+  {
+    "path": "08_bev_25d_map\\clip_03.mp4",
+    "ok": true,
+    "notes": [],
+    "mb": 6.32,
+    "frames": 300,
+    "size": "1280x720",
+    "fps": 30.0,
+    "luma": 37.6,
+    "detail": 37.9,
+    "motion": 3.86
+  },
+  {
+    "path": "08_bev_25d_map\\clip_04.mp4",
+    "ok": true,
+    "notes": [],
+    "mb": 7.06,
+    "frames": 300,
+    "size": "1280x720",
+    "fps": 30.0,
+    "luma": 37.8,
+    "detail": 37.9,
+    "motion": 4.53
+  },
+  {
+    "path": "08_bev_25d_map\\clip_05.mp4",
+    "ok": true,
+    "notes": [],
+    "mb": 6.19,
+    "frames": 300,
+    "size": "1280x720",
+    "fps": 30.0,
+    "luma": 36.9,
+    "detail": 36.6,
+    "motion": 4.34
+  },
+  {
+    "path": "09_world_model\\clip_01.mp4",
+    "ok": false,
+    "notes": [
+      "missing"
+    ]
+  },
+  {
+    "path": "09_world_model\\clip_02.mp4",
+    "ok": false,
+    "notes": [
+      "missing"
+    ]
+  },
+  {
+    "path": "09_world_model\\clip_03.mp4",
+    "ok": false,
+    "notes": [
+      "missing"
+    ]
+  },
+  {
+    "path": "09_world_model\\clip_04.mp4",
+    "ok": false,
+    "notes": [
+      "missing"
+    ]
+  },
+  {
+    "path": "09_world_model\\clip_05.mp4",
+    "ok": false,
+    "notes": [
+      "missing"
+    ]
+  },
+  {
+    "path": "10_rl_policy\\clip_01.mp4",
+    "ok": false,
+    "notes": [
+      "missing"
+    ]
+  },
+  {
+    "path": "10_rl_policy\\clip_02.mp4",
+    "ok": false,
+    "notes": [
+      "missing"
+    ]
+  },
+  {
+    "path": "10_rl_policy\\clip_03.mp4",
+    "ok": false,
+    "notes": [
+      "missing"
+    ]
+  },
+  {
+    "path": "10_rl_policy\\clip_04.mp4",
+    "ok": false,
+    "notes": [
+      "missing"
+    ]
+  },
+  {
+    "path": "10_rl_policy\\clip_05.mp4",
+    "ok": false,
+    "notes": [
+      "missing"
+    ]
+  },
+  {
+    "path": "11_final_dashboard\\clip_01.mp4",
+    "ok": false,
+    "notes": [
+      "missing"
+    ]
+  },
+  {
+    "path": "11_final_dashboard\\clip_02.mp4",
+    "ok": false,
+    "notes": [
+      "missing"
+    ]
+  },
+  {
+    "path": "11_final_dashboard\\clip_03.mp4",
+    "ok": false,
+    "notes": [
+      "missing"
+    ]
+  },
+  {
+    "path": "11_final_dashboard\\clip_04.mp4",
+    "ok": false,
+    "notes": [
+      "missing"
+    ]
+  },
+  {
+    "path": "11_final_dashboard\\clip_05.mp4",
+    "ok": false,
+    "notes": [
+      "missing"
+    ]
+  }
+]

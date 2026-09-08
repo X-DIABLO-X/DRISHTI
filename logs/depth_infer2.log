@@ -1,0 +1,7 @@
+Loading weights:   0%|          | 0/287 [00:00<?, ?it/s]Loading weights: 100%|##########| 287/287 [00:00<00:00, 3246.23it/s]
+Depth Anything V2-Small  24.79 M params  device=cuda fp16=True
+clip_01: 300 frames in  43.6s ( 75.0 ms/frame) | a=11.54 resid=0.065 inl=5572 valid=67% med_depth=0.98 m | 128 MB
+clip_02: 300 frames in  46.9s ( 83.5 ms/frame) | a=12.02 resid=0.061 inl=5694 valid=67% med_depth=1.07 m | 122 MB
+clip_03: 300 frames in  42.3s ( 70.3 ms/frame) | a=10.67 resid=0.042 inl=5417 valid=71% med_depth=1.07 m | 130 MB
+clip_04: 300 frames in  52.7s (113.5 ms/frame) | a=10.73 resid=0.055 inl=5795 valid=71% med_depth=1.09 m | 118 MB
+clip_05: 300 frames in  76.5s (110.8 ms/frame) | a=10.11 resid=0.077 inl=5488 valid=70% med_depth=0.73 m | 120 MB

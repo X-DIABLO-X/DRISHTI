@@ -1,0 +1,9 @@
+device=cuda  checkpoint=D:\HARSHIT\UVG\checkpoints\trav_unc_shared.pt  trunk shared=True
+[clip_01] 300 frames  194.6 ms/frame  (trav 67.3 + unc 18.4 + geom 45.4)  mean conf 0.435  safe 22.2%  npz 168.2+204.9 MB
+[clip_02] 300 frames  120.7 ms/frame  (trav 48.6 + unc 17.0 + geom 41.5)  mean conf 0.518  safe 33.8%  npz 166.9+186.2 MB
+[clip_03] 300 frames  121.6 ms/frame  (trav 48.7 + unc 16.8 + geom 43.1)  mean conf 0.269  safe 18.8%  npz 161.8+208.3 MB
+[clip_04] 300 frames  121.2 ms/frame  (trav 48.2 + unc 16.2 + geom 42.8)  mean conf 0.297  safe 25.2%  npz 162.5+211.9 MB
+[clip_05] 300 frames  121.9 ms/frame  (trav 49.4 + unc 16.9 + geom 43.0)  mean conf 0.239  safe 9.4%  npz 157.1+217.3 MB
+
+SANITY CHECK  daylight 0.4768  vs  low light 0.2678  -> PASS (+43.8% relative)
+wrote D:\HARSHIT\UVG\work\unc_summary.json

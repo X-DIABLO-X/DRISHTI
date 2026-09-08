@@ -1,0 +1,56 @@
+==========================================================================
+DRISHTI - rolling 2.5D BEV mapping
+grid 128x192 @ 0.06 m  (7.68 m forward, +/-5.76 m lateral)   decay 0.965/frame, retire at 45 frames
+metric scale from an ASSUMED camera height of 0.12 m - not calibrated
+==========================================================================
+
+[clip_01]
+  loaded 300 frames of (360, 640) depth in 2.4 s
+    100/300  46.7 ms/frame
+    200/300  47.4 ms/frame
+    300/300  42.2 ms/frame
+   45.4 ms/frame (median 46.2)  -> bev.npz 59 MB
+  cells: safe 1.0%  risky 6.5%  obstacle 21.6%  unknown 70.9%  conf 0.68
+
+[clip_02]
+  loaded 300 frames of (360, 640) depth in 3.0 s
+    100/300  46.1 ms/frame
+    200/300  38.0 ms/frame
+    300/300  46.0 ms/frame
+   43.4 ms/frame (median 44.9)  -> bev.npz 49 MB
+  cells: safe 2.3%  risky 7.8%  obstacle 14.1%  unknown 75.8%  conf 0.66
+
+[clip_03]
+  loaded 300 frames of (360, 640) depth in 3.0 s
+    100/300  44.6 ms/frame
+    200/300  44.4 ms/frame
+    300/300  44.6 ms/frame
+   44.5 ms/frame (median 44.2)  -> bev.npz 37 MB
+  cells: safe 1.9%  risky 4.4%  obstacle 9.9%  unknown 83.8%  conf 0.64
+
+[clip_04]
+  loaded 300 frames of (360, 640) depth in 3.0 s
+    100/300  46.5 ms/frame
+    200/300  46.7 ms/frame
+    300/300  46.9 ms/frame
+   46.7 ms/frame (median 46.3)  -> bev.npz 38 MB
+  cells: safe 2.2%  risky 4.2%  obstacle 15.9%  unknown 77.7%  conf 0.65
+
+[clip_05]
+  loaded 300 frames of (360, 640) depth in 3.0 s
+    100/300  48.2 ms/frame
+    200/300  46.8 ms/frame
+    300/300  47.4 ms/frame
+   47.4 ms/frame (median 47.0)  -> bev.npz 34 MB
+  cells: safe 0.5%  risky 3.1%  obstacle 11.1%  unknown 85.3%  conf 0.62
+
+==========================================================================
+wrote bev cache for 5/5 clips, 1500 frames, 45.5 ms/frame mean (CPU, numpy+OpenCV; no GPU used by this stage)
+clip       frames  ms/fr   safe  risky   obst    unk  conf     MB
+clip_01       300   45.4   1.0%   6.5%  21.6%  70.9%  0.68     59
+clip_02       300   43.4   2.3%   7.8%  14.1%  75.8%  0.66     49
+clip_03       300   44.5   1.9%   4.4%   9.9%  83.8%  0.64     37
+clip_04       300   46.7   2.2%   4.2%  15.9%  77.7%  0.65     38
+clip_05       300   47.4   0.5%   3.1%  11.1%  85.3%  0.62     34
+summary -> D:\HARSHIT\UVG\work\bev_infer_summary.json
+==========================================================================

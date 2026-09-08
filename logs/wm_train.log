@@ -1,0 +1,35 @@
+[data] synthetic stand-in scenes (no `bev` cache present yet)
+[data] anchors=576  real multi-step transitions=0  (load 3.4s)
+[model] 728,610 params (2.91 MB fp32) on cuda
+  step     0/6000  total 2.6295  lat 0.1028  occ 0.6943  trav 0.1200  risk 0.6833  (2s)
+  step   400/6000  total 2.2421  lat 0.0601  occ 0.6699  trav 0.0400  risk 0.6000  (60s)
+  step   800/6000  total 2.1967  lat 0.0445  occ 0.6800  trav 0.0109  risk 0.5884  (89s)
+  step  1200/6000  total 1.9361  lat 0.0304  occ 0.6450  trav 0.0041  risk 0.4705  (127s)
+  step  1600/6000  total 2.0805  lat 0.0526  occ 0.6682  trav 0.0060  risk 0.5221  (170s)
+  step  2000/6000  total 2.2528  lat 0.0323  occ 0.6637  trav 0.0033  risk 0.6107  (212s)
+  step  2400/6000  total 2.0039  lat 0.0669  occ 0.6815  trav 0.0069  risk 0.4463  (253s)
+  step  2800/6000  total 2.0423  lat 0.0350  occ 0.6743  trav 0.0045  risk 0.4992  (303s)
+  step  3200/6000  total 2.0612  lat 0.0435  occ 0.6520  trav 0.0137  risk 0.5656  (348s)
+  step  3600/6000  total 2.2980  lat 0.0490  occ 0.6692  trav 0.0170  risk 0.6303  (406s)
+  step  4000/6000  total 2.2462  lat 0.0704  occ 0.6874  trav 0.0041  risk 0.5976  (487s)
+  step  4400/6000  total 1.9748  lat 0.0589  occ 0.6627  trav 0.0042  risk 0.4732  (566s)
+  step  4800/6000  total 2.1768  lat 0.0326  occ 0.6638  trav 0.0039  risk 0.5806  (676s)
+  step  5200/6000  total 2.1638  lat 0.0390  occ 0.6781  trav 0.0044  risk 0.5731  (757s)
+  step  5600/6000  total 1.9917  lat 0.0305  occ 0.6420  trav 0.0015  risk 0.5197  (823s)
+  step  5999/6000  total 2.1663  lat 0.0322  occ 0.6671  trav 0.0032  risk 0.5878  (888s)
+
+[eval] open-loop multi-step error, model vs persistence baseline (MAE, lower is better)
+  step | occ: model persist  encfloor | trav: model persist | risk: model persist
+    1  |      0.0318  0.0212    0.0292 |      0.0299  0.0270 |      0.0518  0.0389
+    2  |      0.0330  0.0311    0.0304 |      0.0410  0.0576 |      0.0504  0.0720
+    3  |      0.0306  0.0364    0.0294 |      0.0454  0.0883 |      0.0510  0.1283
+    4  |      0.0280  0.0399    0.0268 |      0.0408  0.1201 |      0.0519  0.1394
+    5  |      0.0259  0.0429    0.0241 |      0.0501  0.1488 |      0.0574  0.1522
+    6  |      0.0241  0.0466    0.0213 |      0.0465  0.1655 |      0.0617  0.1647
+  occ  : model beats persistence (4/6 horizon steps)
+  trav : model beats persistence (5/6 horizon steps)
+  risk : model beats persistence (5/6 horizon steps)
+  'encfloor' = decoding the TRUE future map's own latent; no dynamics model can do better than that, it is the 96-D bottleneck.
+
+[save] D:\HARSHIT\UVG\checkpoints\world_model.pt  (2.93 MB)
+[save] D:\HARSHIT\UVG\work\wm_train_log.npz

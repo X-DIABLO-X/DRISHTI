@@ -1,0 +1,87 @@
+Gym has been unmaintained since 2022 and does not support NumPy 2.0 amongst other critical functionality.
+Please upgrade to Gymnasium, the maintained drop-in replacement of Gym, or contact the authors of your software and request that they upgrade.
+Users of this version of Gym should be able to simply replace 'import gym' with 'import gymnasium as gym' in the vast majority of cases.
+See the migration guide at https://gymnasium.farama.org/introduction/migration_guide/ for additional information.
+DRISHTI prediction + decision inference
+  world model : 728,610 params (2.91 MB fp32), 7.22 ms per frame for 6 actions x 6 steps on cuda
+  checkpoint  : D:\HARSHIT\UVG\checkpoints\world_model.pt
+  policy      : D:\HARSHIT\UVG\checkpoints\ppo_drishti.zip
+  planner     : 17 candidate arcs, 12 x 0.167 s
+  [clip_01] 300 frames in 16.9s (56.3 ms/frame: wm 9.79, plan 43.37, gate 3.00)
+        decisions GO 30  SLOW 49  REROUTE 34  STOP 187   overrides 230/300
+        rules     R2:110  R3:3  R4:136  R8:51
+        -> D:\HARSHIT\UVG\work\cache\clip_01\plan.npz  (5.4 MB)
+  [clip_02] 300 frames in 17.2s (57.3 ms/frame: wm 10.49, plan 42.32, gate 4.35)
+        decisions GO 121  SLOW 12  REROUTE 24  STOP 143   overrides 153/300
+        rules     R1:66  R2:15  R3:1  R4:97  R8:121
+        -> D:\HARSHIT\UVG\work\cache\clip_02\plan.npz  (5.4 MB)
+  [clip_03] 300 frames in 17.0s (56.6 ms/frame: wm 10.45, plan 40.52, gate 5.46)
+        decisions GO 142  SLOW 69  REROUTE 36  STOP 53   overrides 112/300
+        rules     R1:6  R2:20  R4:101  R6:8  R8:165
+        -> D:\HARSHIT\UVG\work\cache\clip_03\plan.npz  (5.4 MB)
+  [clip_04] 300 frames in 16.7s (55.6 ms/frame: wm 10.25, plan 41.49, gate 3.63)
+        decisions GO 89  SLOW 54  REROUTE 38  STOP 119   overrides 175/300
+        rules     R1:1  R2:1  R3:4  R4:197  R5:1  R6:1  R8:95
+        -> D:\HARSHIT\UVG\work\cache\clip_04\plan.npz  (5.4 MB)
+  [clip_05] 300 frames in 16.0s (53.4 ms/frame: wm 10.25, plan 41.39, gate 1.59)
+        decisions GO 2  SLOW 53  REROUTE 68  STOP 177   overrides 263/300
+        rules     R1:9  R2:77  R4:199  R8:15
+        -> D:\HARSHIT\UVG\work\cache\clip_05\plan.npz  (5.4 MB)
+
+==============================================================================
+`plan` cache written for: clip_01, clip_02, clip_03, clip_04, clip_05
+keys (N frames, A=6 actions, T=6 wm steps, C=17 candidates, S=12 rollout steps):
+  world model:
+    wm_latent (N,96) f16
+    wm_occ (N,A,T,16,16) f16
+    wm_trav (N,A,T) f16
+    wm_risk (N,A,T) f16
+    wm_risk_total (N,A) f32
+    wm_latency_ms (N,) f32
+  candidates:
+    cand_action (C,) i8
+    cand_v (C,) f32
+    cand_w (C,) f32
+    traj_xy (N,C,S,2) f16
+    traj_yaw (N,C,S) f16
+    traj_clearance (N,C,S) f16
+    traj_cost (N,C) f32
+    traj_risk (N,C) f32
+    traj_max_step (N,C) f32
+    traj_unknown_frac (N,C) f32
+    traj_mean_conf (N,C) f32
+    traj_feasible (N,C) bool
+    traj_reject_reason (N,C) <U96
+    best_traj_idx (N,) i16
+  policy:
+    policy_action (N,) i8
+    policy_probs (N,A) f32
+    policy_source (N,) <U24  "rl" | "rl+supervisor" | "supervisor"
+    policy_ckpt (N,) <U96
+  decision:
+    decision_kind (N,) i8
+    decision_action (N,) i8
+    decision_speed (N,) f32
+    decision_risk (N,) f32
+    decision_conf (N,) f32
+    decision_unknown_frac (N,) f32
+    decision_rule (N,) <U4
+    decision_reason (N,) <U200
+    override (N,) bool
+  aliases for drishti.pipeline.build_packet (same arrays, shorter names):
+    decision == decision_kind
+    action == decision_action
+    speed_cmd == decision_speed
+    reason == decision_reason
+    risk == decision_risk
+    confidence == decision_conf
+    unknown_frac == decision_unknown_frac
+  meta:
+    meta () json string
+
+renderers: drishti.render.r_world.render(packet, state) for 09_world_model,
+           drishti.render.r_rl.render(packet, state) for 10_rl_policy.
+  r_world `state` keys: bev_state (8,H,W) float32, wm_meta={params_total, latency_ms, device}
+  r_rl    `state` keys: bev_state, policy_probs (6,), policy_action int,
+           best_idx int, policy_source str  (falls back to packet fields)
+==============================================================================

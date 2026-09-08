@@ -1,0 +1,23 @@
+# Raw source footage - 767MB third-party video, not redistributed at full length/resolution
+video/
+
+# Reproducible build artifacts - regenerate via tools/run_all.py
+work/
+temp/
+
+# Trained checkpoints - large binaries, regenerate via the training scripts in drishti/training/
+checkpoints/
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+.pytest_cache/
+*.egg-info/
+
+# OS / editor
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+

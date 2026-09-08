@@ -1,0 +1,61 @@
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+Loading weights:   0%|          | 0/208 [00:00<?, ?it/s]Loading weights: 100%|##########| 208/208 [00:00<00:00, 3613.13it/s]
+[dataset] teacher on cuda fp16=True flip_tta=True input_mode=short512
+[dataset] frame 512x288  soft 7x72x128 fp16  label 144x256 u8
+[dataset] 750 clip frames; seeking extras from input.mp4 ...
+[dataset] 1350 frames total (600 extra), running teacher ...
+  100/1350  266s  (2655 ms/frame)
+  200/1350  275s  (1373 ms/frame)
+  300/1350  285s  (949 ms/frame)
+  400/1350  295s  (737 ms/frame)
+  500/1350  305s  (610 ms/frame)
+  600/1350  317s  (528 ms/frame)
+  700/1350  329s  (470 ms/frame)
+  800/1350  343s  (428 ms/frame)
+  900/1350  365s  (406 ms/frame)
+  1000/1350  391s  (391 ms/frame)
+  1100/1350  411s  (373 ms/frame)
+  1200/1350  421s  (350 ms/frame)
+  1300/1350  431s  (332 ms/frame)
+
+[dataset] wrote 1350 samples to D:\HARSHIT\UVG\work\dataset\seg
+[dataset] split: 1181 train / 169 val (every 8th sample held out)
+[dataset] elapsed 437s
+[dataset] pixel class balance (teacher pseudo-labels, ego-masked):
+   0 sky          8.98%
+   1 trail       26.33%
+   2 grass        5.19%
+   3 rough_veg   15.20%
+   4 obstacle    18.94%
+   5 water        0.04%
+   6 dynamic      0.54%
+   - ignore      24.78%
+[dataset] on disk 202 MiB
+[h264 @ 000001e305823380] mmco: unref short failure
+[h264 @ 000001e305823380] mmco: unref short failure
+[h264 @ 000001e305823380] mmco: unref short failure
+[h264 @ 000001e305823380] mmco: unref short failure
+[h264 @ 000001e305823380] mmco: unref short failure
+[h264 @ 000001e305823380] mmco: unref short failure
+[h264 @ 000001e305823380] mmco: unref short failure
+[h264 @ 000001e305823380] mmco: unref short failure
+[h264 @ 000001e305823380] mmco: unref short failure
+[h264 @ 000001e305823380] mmco: unref short failure
+[h264 @ 000001e305823380] mmco: unref short failure
+[h264 @ 000001e305823380] mmco: unref short failure
+[h264 @ 000001e305823380] mmco: unref short failure
+[h264 @ 000001e305823380] mmco: unref short failure
+[h264 @ 000001e305823380] mmco: unref short failure
+[h264 @ 000001e305823380] mmco: unref short failure
+[h264 @ 000001e305823380] mmco: unref short failure
+[h264 @ 000001e305823380] mmco: unref short failure
+[h264 @ 000001e305823380] mmco: unref short failure
+[h264 @ 000001e305823380] mmco: unref short failure
+[h264 @ 000001e305823380] mmco: unref short failure
+[h264 @ 000001e305823380] mmco: unref short failure
+[h264 @ 000001e305823380] mmco: unref short failure
+[h264 @ 000001e305823380] mmco: unref short failure
+[h264 @ 000001e305823380] mmco: unref short failure
+[h264 @ 000001e305823380] mmco: unref short failure
+[h264 @ 000001e305823380] mmco: unref short failure
+[h264 @ 000001e305823380] mmco: unref short failure

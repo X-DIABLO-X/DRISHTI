@@ -1,0 +1,81 @@
+{
+  "generated": "2026-09-08 05:40:51",
+  "hardware": {
+    "os": "Windows 10 (10.0.26200)",
+    "python": "3.10.0",
+    "cpu": "13th Gen Intel(R) Core(TM) i5-13500HX",
+    "cpu_physical_cores": 14,
+    "cpu_logical_processors": 20,
+    "ram_gb": 31.7,
+    "torch": "2.11.0+cu128",
+    "onnxruntime": "1.23.2",
+    "onnxruntime_providers": [
+      "TensorrtExecutionProvider",
+      "CUDAExecutionProvider",
+      "CPUExecutionProvider"
+    ],
+    "cuda_available": true,
+    "gpu": "NVIDIA GeForce RTX 4050 Laptop GPU",
+    "gpu_vram_gb": 6.0,
+    "note": "GPU is shared with other agents in this build; GPU numbers may carry contention. CPU numbers were taken with the GPU idle."
+  },
+  "method": {
+    "type": "structured output-channel pruning of block interiors",
+    "criterion": "L1 filter norm scaled by the following norm layer's gain (Li et al., ICLR 2017)",
+    "not_pruned": "residual adds, concatenations, PagFM similarity products, PAPPM grouped convolutions, and the MobileNetV3 trunk - their channel counts are coupled across branches",
+    "finetune": "self-distillation against the unpruned student; there is no ground-truth annotation in this repo, so 'accuracy' here means agreement with the unpruned FP32 model",
+    "latency": "PyTorch CPU, fixed thread count, median of 30 timed iterations after warm-up"
+  },
+  "models": [
+    {
+      "name": "pidnet_s_terrain",
+      "provenance": "distilled student trained in this repo",
+      "checkpoint": "D:\\HARSHIT\\UVG\\checkpoints\\pidnet_s_drishti7.pt",
+      "input_shape": [
+        1,
+        3,
+        288,
+        512
+      ],
+      "levels": [
+        {
+          "sparsity": 0.3,
+          "channels_removed": 931,
+          "params": 5424447,
+          "params_pct_of_baseline": 71.15,
+          "mb_fp32": 21.698,
+          "gflops": 4.759,
+          "gflops_pct_of_baseline": 71.58,
+          "agreement_before_finetune": {
+            "mIoU_vs_unpruned": 0.05215,
+            "pixel_agreement": 0.15462
+          },
+          "cpu_latency": {
+            "median_ms": 1980.787,
+            "p95_ms": 2292.02,
+            "iters": 30,
+            "torch_threads": 4
+          },
+          "cpu_speedup_vs_baseline": 1.012,
+          "checkpoint": "D:\\HARSHIT\\UVG\\checkpoints\\pruned\\pidnet_s_terrain.prune30.pt",
+          "status": "ok"
+        }
+      ],
+      "status": "ok",
+      "baseline": {
+        "params": 7624167,
+        "mb_fp32": 30.497,
+        "gflops": 6.648,
+        "cpu_latency": {
+          "median_ms": 2004.737,
+          "p95_ms": 2459.269,
+          "iters": 30,
+          "torch_threads": 4
+        },
+        "n_prunable_interiors": 26,
+        "eval_batches": 2,
+        "train_batches": 5
+      }
+    }
+  ]
+}

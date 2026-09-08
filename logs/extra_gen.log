@@ -1,0 +1,11 @@
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+Loading weights:   0%|          | 0/287 [00:00<?, ?it/s]Loading weights:  72%|#######2  | 208/287 [00:00<00:00, 2055.69it/s]Loading weights: 100%|##########| 287/287 [00:00<00:00, 2091.52it/s]
+Loading weights:   0%|          | 0/208 [00:00<?, ?it/s]Loading weights:  78%|#######8  | 163/208 [00:00<00:00, 1628.37it/s]Loading weights: 100%|##########| 208/208 [00:00<00:00, 1905.38it/s]
+[extra] 8/48 pairs  11s
+[extra] 16/48 pairs  17s
+[extra] 24/48 pairs  27s
+[extra] 32/48 pairs  41s
+[extra] 40/48 pairs  49s
+[extra] 48/48 pairs  56s
+[extra] cached 48 pairs from input.mp4 in 89s
+48
