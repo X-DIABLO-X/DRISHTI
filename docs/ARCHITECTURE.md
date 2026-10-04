@@ -6,8 +6,11 @@ safety rule table and the training recipes.
 
 This document uses the packet's own discipline: **Planned / Running / Measured**.
 Everything below is *Running* (code in this repository that executes) or *Measured*
-(a number this repository produced). Nothing here is *Planned*-only; where a component
-of the speaker packet's design is absent, it is named as absent.
+(a number this repository produced). The one exception is marked where it appears: the
+ROS 2 / Gazebo Harmonic package (§4.19) is written but has not been executed in this
+repository's build environment. Where a component of the design in the SIH26126
+presentation is
+absent, it is named as absent.
 
 Contract: [`CONTRACT.md`](../CONTRACT.md). Shared types: [`drishti/types.py`](../drishti/types.py).
 Configuration: [`drishti/config.py`](../drishti/config.py).
@@ -23,6 +26,7 @@ clip frame 1280x720                                     io_utils.read_frames
         ├─(1) DepthStage ─────────────► relative inverse depth q  (518x518 ViT)
         │        └─ fit_metric_ground(q, valid, seg.label)  ──► GroundFit(a, b, n, h)
         │        └─ depth_from_q                             ──► DepthResult.depth_m
+        │        └─ FitValidityTracker                       ──► unreliable fit/tiles -> valid=False
         │
         ├─(2) SegStage (PIDNet-S) ────► SegResult.label / prob_max / entropy
         │
@@ -34,14 +38,20 @@ clip frame 1280x720                                     io_utils.read_frames
         │        (same trunk forward, reused features + MC-dropout head)
         │
         ├─(6) OdometryStage (ORB) ────► OdometryResult.pose / d_trans / d_yaw / tracking_ok
+        │        └─ ImuFusion (rover) ───────────────────► scale- and heading-corrected motion
         ├─(7) VPRStage (GeM) ─────────► PlaceResult.descriptor / is_revisit
+        │        └─ LoopClosureManager (rover) ──────────► PnP-verified loop -> pose graph
         │
         ├─(8) MappingStage ───────────► BEVMap (height, trav_prob, conf, age, hits, terrain)
         ├─(9) LidarizeStage ──────────► PointCloud + RingScan (visualisation product)
         │
-        ├─(10) WorldModelStage ───────► 6 actions x 6 steps of latent rollout
-        ├─(11) Planner ───────────────► 19 candidate Trajectory objects, scored
-        ├─(12) PolicyStage (PPO) ─────► one preferred action
+        ├─(9b) DynamicObstacleLayer ──► inflated, sub-second-expiry cells for movers
+        ├─(9c) GoalPlanner ───────────► open ground: steer for Point B
+        │        └─ GlobalCostGrid + D* Lite ────────────► boxed in: steer along the route
+        │
+        ├─(10) WorldModelStage ───────► 6 actions x 6 steps of latent rollout (optional)
+        ├─(11) Planner ───────────────► 17 candidate Trajectory objects, scored
+        ├─(12) PolicyStage (PPO) ─────► one preferred action (optional, advisory)
         └─(13) Supervisor ────────────► Decision(kind, action, speed_mps, reason, rule)
 ```
 
@@ -50,11 +60,13 @@ it". Stages 10–13 are *decision*: they answer "what should the vehicle do and 
 allowed". The split matters because the supervisor can veto the policy without any
 perception rerun.
 
-**Execution model.** Perception runs once per clip and is cached
+**Execution model.** Offline, perception runs once per clip and is cached
 (`io_utils.save_stage` → `work/cache/<clip>/<stage>.npz`); every renderer reads from
 cache. This is why the eleven output videos are cheap to regenerate and why the
 benchmark numbers in [`output/benchmarks.json`](../output/benchmarks.json) are
-per-stage rather than per-video.
+per-stage rather than per-video. **Live**, `drishti/runtime.py` (`DrishtiNavigator`)
+runs the same stages frame by frame in the order above and returns a velocity command
+and is wrapped as a ROS 2 node (both in §4.19).
 
 ---
 
@@ -180,6 +192,14 @@ Every stage follows the contract shape: `__init__(device=...)`, `reset()`, `__ca
   handheld-style footage and that shakes the metric fit). `reset()` clears both.
 * **Cache** `depth`: `q`, `depth` f16, `valid` u8, `scale`, `shift`, `residual`,
   `inliers`, `normal` (300,3), `ms`.
+* **Fit validity** (`drishti/perception/fit_validity.py`): where the ground fit is
+  unreliable, the region is marked invalid and becomes UNKNOWN downstream.
+  *Frame level*: a failed fit may reuse the last good one for ≤ 15 frames (0.5 s); after
+  that, or with no good fit yet, the whole frame is invalid (previously a nominal plane
+  was used and its depths published as valid). *Region level*: the lower half is cut
+  into 8×4 tiles; in a tile with ≥ 150 trail/grass pixels, a median relative
+  inverse-depth disagreement with the fitted plane above 0.30 invalidates the tile.
+  The cached videos predate this gate; the live runtime applies it.
 
 ### 4.2 Terrain — `drishti/models/segmentation.py`, `seg_pidnet.py`, `seg_teacher.py`
 
@@ -277,7 +297,8 @@ the supervisor turns into an unconditional STOP (rule R1).
 > This is **depth-anchored monocular VO**, not ORB-SLAM3. There is no IMU in the
 > footage, so there is no monocular-inertial initialisation, no loop-closing back end and
 > no bundle adjustment. Calling it "ORB-SLAM3-style front end" is the strongest honest
-> description.
+> description. For the rover, IMU fusion (§4.17) and a pose-graph loop-closing back end
+> (§4.18) sit after this stage; neither is used on the footage.
 
 ### 4.7 Place recognition — `drishti/models/vpr.py`
 
@@ -353,7 +374,7 @@ which is what makes it usable both as the RL simulator and as a per-frame risk o
 
 A deterministic small-fan sampling rollout planner (explicitly **not** MPPI).
 `dt = 2.0/12 = 0.1667 s`, 12 steps, unicycle `arc_poses`. Six base actions × a steering
-fan give **19 candidates**.
+fan (5 + 3 + 3 + 3 + 2 + 1) give **17 candidates**: 16 moving arcs and standing still.
 
 Cost, exactly:
 
@@ -364,9 +385,20 @@ cost = 2.4·wm_risk[a] + 2.0·max(per_step_risk) + 1.3·unknown_frac
 ```
 
 with `step_norm = clip(max_step / 0.045, 0, 2)`, `inv_clearance = 1/max(min_clearance, 0.08)`
-when `min_clearance < 2 m` else 0, and `progress = xy[-1]·(−sin ψ_goal, cos ψ_goal)`
-with `ψ_goal = 0` — there is no global goal offline, so the goal direction is
-"keep going forward along the trail".
+when `min_clearance < 2 m` else 0.
+
+*Progress* has two forms:
+
+* **No goal** (the recorded footage): `progress = xy[-1]·(−sin ψ_goal, cos ψ_goal)` with
+  `ψ_goal = 0`, i.e. "keep going forward along the trail".
+* **With a goal point** `g` from the goal layer (§4.14), Point B itself or a D* Lite
+  look-ahead point: `progress = |g| − min_t |xy_t − g|`, the reduction in distance to
+  `g` at closest approach, so overshooting earns nothing. Two more terms apply only here.
+  `+2.0` (`idle`) for standing still, because without it a goal *behind* the vehicle
+  deadlocks it (every turning arc earns little progress and pays turn and clearance
+  terms). And `+1.5·(1 − cos Δψ)/2` (`heading`) for an arc that does not pass through
+  `g` and ends facing away from it. Both are costs, not constraints: infeasible arcs
+  stay rejected and every supervisor rule still applies.
 
 Hard feasibility gates, first match writes `reject_reason`:
 
@@ -424,6 +456,127 @@ stopping at the 2 s horizon, so R7 is not blind past the planning horizon.
 The reported `Decision` carries `rule` (`"R1"`…`"R8"`), a human-readable `reason`, and
 `policy_source` ∈ `{"rl", "supervisor", "rl+supervisor"}` so the dashboard can always say
 who decided.
+
+**Goal-level stops** are applied by the runtime in front of the supervisor's verdict
+(they can only turn a command into STOP, never the reverse):
+
+| Rule | Condition | Decision |
+|---|---|---|
+| **G0** | within `arrive_tol_m` (0.25 m) of Point B | STOP: arrived |
+| **G1** | D* Lite's open list ran dry: no route over the ground seen so far | STOP and hold until something changes (a mover leaves, a cell expires) |
+| **G2** | D* Lite hit its per-cycle expansion cap (6,000) | STOP this cycle; the search resumes next cycle |
+
+
+### 4.14 Goal layer — `drishti/nav/goal_planner.py`, `goal_map.py`, `nav_config.py`
+
+Point A → Point B over a world-fixed grid of "the ground seen so far".
+
+* **GlobalCostGrid**: 60 m × 60 m at 0.12 m (2×2 BEV cells), centred on the start pose,
+  in the odometry frame. Every cycle the 8-channel BEV state is folded in (worst
+  evidence per cell per frame wins, newest frame wins over older ones). Cost per metre:
+  seen-safe 1.0, risky 2.5, **never observed / low confidence 4.0** (finite: unseen
+  ground costs, it is never free and never a wall), obstacle or height step above
+  clearance ∞. Blocked cells are dilated by 0.16 m (vehicle half-width + margin), then a
+  0.5 m soft band raises cost up to 4× towards them, as in a Nav2 inflation layer, so
+  routes stay centred in corridors. Evidence older than 30 s reverts to unknown, so a
+  drifted old obstacle cannot wall the vehicle in forever.
+* **Open ground**: the straight corridor to B (clipped to the local map) is ≥ 70%
+  observed with no blocked cell, and the global segment is unblocked. The arcs score
+  progress towards B itself.
+* **Boxed in**: D* Lite (§4.15) from B to the vehicle, and the arcs steer for the route
+  point 1.6 m ahead. Blocking changes (finite ↔ ∞) are pushed into the search at once;
+  cost refinements on cells that stay passable are batched once per second, which keeps
+  the median cycle near 30 ms.
+* **Recall**: the rolling map forgets a cell 1.5 s after it leaves the camera cone. For
+  cells that are unobserved *locally*, `recall_into_state` writes back remembered
+  evidence (≤ 15 s old) at confidence 0.5, below `conf_slow`. The vehicle can then turn
+  round over ground it has seen, but it slows while relying on memory. Live observations
+  are never overwritten.
+* **Measured** (`tools/sim_goal_nav.py`, 6 scenarios × 3 seeds, ground-truth map rendered
+  through the view cone, no perception networks in the loop): **18/18 reached, 0
+  collisions, 0 interventions** → `logs/sim_goal_nav.json`.
+
+### 4.15 D* Lite — `drishti/nav/dstar_lite.py`
+
+Koenig & Likhachev (2002), with the `k_m` key modifier and a lazy-deletion heap.
+8-connected; edge cost = step length × mean of the two cells' costs. A diagonal step is
+refused if it would cut a blocked corner. The heuristic is octile distance × the cheapest
+cell cost (admissible, consistent). Keys are compared with a 1e-9 tolerance, because
+float ties otherwise ended the repair one vertex early (found by the Dijkstra
+cross-check). `compute(max_expansions)` is resumable: `converged` and `exhausted` tell
+"still searching" from "provably unreachable". Verified against a from-scratch
+Dijkstra through random cost changes and start moves (`tests/test_dstar_lite.py`).
+
+### 4.16 Dynamic layer — `drishti/perception/dynamic_layer.py`
+
+DRISHTI-7 class 6 (person, animal, vehicle) pixels with valid depth are projected into
+BEV cells, dilated by the vehicle half-width + 0.30 m, and given an expiry of
+`t + 0.8 s` (under one second). The layer rolls with ego-motion like the terrain map.
+`apply()` writes active cells into the planner state as certain OBSTACLE. The same
+cells are blocked in the global grid until they expire, so D* Lite replans when a mover
+appears and again when it leaves. A cell is cleared only by its own expiry, never by a
+frame in which segmentation happened to miss the person.
+
+### 4.17 Rover IMU fusion — `drishti/perception/imu_fusion.py`
+
+Not used on the footage (no IMU). On the rover:
+
+* **Heading**: complementary filter. The bias-corrected gyro carries the short term and
+  VO the long term; gyro bias is learned from the slow gyro-minus-VO yaw-rate residual
+  and during confirmed stops. During VO dropouts the gyro carries heading alone.
+* **Scale**: over a 2 s window, changes in VO forward speed are regressed against
+  changes in IMU-integrated speed (`s = Σ dv_imu·dv_vo / Σ dv_vo²`). Changes cancel the
+  IMU's velocity offset. Windows without acceleration are skipped, because scale is
+  unobservable at constant speed. The estimate is EMA-smoothed and clipped to
+  [0.4, 2.5].
+* **Zero-velocity updates** need the IMU (|a| ≈ g, |ω| ≈ 0) **and** VO (< 0.03 m/s) to
+  agree for 6 consecutive frames, or a commanded stop from the runtime. Biases are
+  learned only on a commanded stop or after 1.5 s quiet. An earlier version learned
+  accelerometer bias during slow acceleration from rest and biased the scale low; the
+  gating is the fix.
+* **Measured** (synthetic, `python -m drishti.perception.imu_fusion`): a deliberately
+  wrong 2× VO scale is recovered to 1.98; heading drift under a 0.01 rad/s gyro bias
+  falls from 18° (VO) to 11°.
+
+### 4.18 Pose graph and loop closure — `drishti/perception/pose_graph.py`, `loop_closure.py`
+
+Keyframes every 0.5 m or 0.35 rad, chained by odometry edges. When VPR reports a revisit,
+the nearest keyframe to the matched frame is verified by ORB matching against that
+keyframe's stored metric depth plus PnP-RANSAC (≥ 25 inliers). A loop edge must then pass
+a **drift-consistency gate**: χ² (3 dof, 99.9% → 16.27) of its residual under the
+covariance propagated along the odometry chain, inflated ×3 because VO drift is
+bias-like. A Cauchy kernel was tried first and rejected, because at the first iteration
+a true loop after metres of drift has the same residual as a false one. Backends: GTSAM
+(`BetweenFactorPose2`, Levenberg–Marquardt) when importable, else a built-in sparse
+Gauss–Newton. Both are tested. **Measured** on a synthetic 16 m square: end-point error
+0.71 → 0.01 m (built-in) and 0.87 → 0.03 m (GTSAM), with a planted false loop rejected
+by both.
+
+### 4.19 Runtime and ROS 2 — `drishti/runtime.py`, `ros2/drishti_ros/`
+
+`DrishtiNavigator.step(bgr, t)` runs, in order: terrain, depth (+ fit validity),
+traversability and trust, odometry, IMU fusion, VPR, 2.5-D map, loop closure, dynamic
+layer, goal layer, optional world model / policy, 17 arcs, supervisor. It returns
+`(v, w, decision, rule, goal status, pose, timings)`. The vehicle profile is applied
+before any stage is constructed. Perception can be injected, which is how the
+closed-loop simulator and the tests drive the navigation half without weights.
+
+The ROS 2 Jazzy package wraps it as `drishti_node` (Image in, Imu optional, PoseStamped
+goal; Twist out plus a JSON decision topic; 0.5 s camera watchdog). It also provides a
+Gazebo Harmonic world matching the `wave_rover` profile, a `ros_gz_bridge` map, a
+`mission_monitor` that scores success, collisions and interventions from simulator
+ground truth only, and a WAVE ROVER serial bridge with a 0.3 s motor watchdog.
+**Written, not yet executed in this repository's environment**; only the pure-Python
+conversions are unit-tested.
+
+### 4.20 Vehicle profiles — `drishti/vehicles.py`, `configs/vehicles/*.json`
+
+Camera height, FOV and pitch, plus footprint, clearance, step limit, slope, speed and
+braking distance, are written into the live `CFG.cam` / `CFG.ugv` (the frozen
+`config.py` is not edited). No model is retrained. `rc_pov` reproduces every cached
+result; `wave_rover` is the target; `example_large_ugv` is illustrative and shows the
+same 10 cm step judged blocking for one chassis and drivable for the other
+(`tests/test_fit_validity_vehicles.py`).
 
 ---
 
@@ -539,12 +692,15 @@ benchmark section and in `output/benchmarks.json`.
 
 ## 7. What this architecture is not
 
-* Not ORB-SLAM3. Depth-anchored monocular VO with no IMU, no loop-closing back end, no
-  bundle adjustment.
+* Not ORB-SLAM3. On the footage: depth-anchored monocular VO with no IMU, no
+  loop-closing back end, no bundle adjustment. On the rover, an IMU complementary
+  filter and a 2-D pose graph are added (§4.17–4.18); there is still no bundle adjustment.
 * Not trained on RELLIS-3D, GOOSE or ORFD. GOOSE-style *taxonomy*; ADE20K teacher;
   this footage.
 * Not a LiDAR. A reconstruction from monocular depth with the camera's blind sectors
   drawn explicitly.
 * Not calibrated. Intrinsics are assumed from a nominal FOV; scale is anchored on an
   assumed camera height.
-* Not physical autonomy. Offline video, no vehicle in the loop, no closed-loop control.
+* Not physical autonomy, yet. Perception is offline video. Closed-loop control is
+  exercised only in a 2-D decision-level simulator with a ground-truth map (§4.14). The
+  Gazebo Harmonic and rover paths are written but not yet run.
