@@ -1,0 +1,508 @@
+{
+ "what": "2-D kinematic closed loop over a ground-truth map rendered through a 92 deg / 6.5 m view cone. Real DRISHTI goal layer, D* Lite, 17-arc planner, supervisor and dynamic layer; NO camera / depth / terrain network in the loop. Tests decisions, not perception.",
+ "episodes": 18,
+ "success_rate": 1.0,
+ "collisions": 0,
+ "interventions": 0,
+ "wall_s": 92.4,
+ "per_episode": [
+  {
+   "scenario": "open",
+   "seed": 0,
+   "outcome": "success",
+   "success": true,
+   "time_s": 8.5,
+   "path_m": 7.78,
+   "final_dist_m": 0.22,
+   "collisions": 0,
+   "interventions": 0,
+   "dstar_cycles": 0,
+   "replans": 0,
+   "max_goal_plan_ms": 5.8,
+   "max_cycle_ms": 40.3,
+   "median_cycle_ms": 25.3,
+   "pose_error_m": 0.0,
+   "decisions": {
+    "GO": 74,
+    "SLOW": 11,
+    "REROUTE": 0,
+    "STOP": 1
+   },
+   "rules": {
+    "R8": 85,
+    "G0": 1
+   }
+  },
+  {
+   "scenario": "open",
+   "seed": 1,
+   "outcome": "success",
+   "success": true,
+   "time_s": 8.1,
+   "path_m": 7.77,
+   "final_dist_m": 0.23,
+   "collisions": 0,
+   "interventions": 0,
+   "dstar_cycles": 0,
+   "replans": 0,
+   "max_goal_plan_ms": 6.3,
+   "max_cycle_ms": 39.2,
+   "median_cycle_ms": 26.3,
+   "pose_error_m": 0.0,
+   "decisions": {
+    "GO": 76,
+    "SLOW": 5,
+    "REROUTE": 0,
+    "STOP": 1
+   },
+   "rules": {
+    "R8": 81,
+    "G0": 1
+   }
+  },
+  {
+   "scenario": "open",
+   "seed": 2,
+   "outcome": "success",
+   "success": true,
+   "time_s": 8.5,
+   "path_m": 7.78,
+   "final_dist_m": 0.23,
+   "collisions": 0,
+   "interventions": 0,
+   "dstar_cycles": 0,
+   "replans": 0,
+   "max_goal_plan_ms": 5.1,
+   "max_cycle_ms": 37.8,
+   "median_cycle_ms": 24.2,
+   "pose_error_m": 0.0,
+   "decisions": {
+    "GO": 74,
+    "SLOW": 11,
+    "REROUTE": 0,
+    "STOP": 1
+   },
+   "rules": {
+    "R8": 85,
+    "G0": 1
+   }
+  },
+  {
+   "scenario": "wall",
+   "seed": 0,
+   "outcome": "success",
+   "success": true,
+   "time_s": 10.3,
+   "path_m": 9.29,
+   "final_dist_m": 0.25,
+   "collisions": 0,
+   "interventions": 0,
+   "dstar_cycles": 42,
+   "replans": 34,
+   "max_goal_plan_ms": 117.5,
+   "max_cycle_ms": 148.5,
+   "median_cycle_ms": 21.8,
+   "pose_error_m": 0.0,
+   "decisions": {
+    "GO": 88,
+    "SLOW": 15,
+    "REROUTE": 0,
+    "STOP": 1
+   },
+   "rules": {
+    "R8": 103,
+    "G0": 1
+   }
+  },
+  {
+   "scenario": "wall",
+   "seed": 1,
+   "outcome": "success",
+   "success": true,
+   "time_s": 10.0,
+   "path_m": 9.28,
+   "final_dist_m": 0.24,
+   "collisions": 0,
+   "interventions": 0,
+   "dstar_cycles": 42,
+   "replans": 36,
+   "max_goal_plan_ms": 106.9,
+   "max_cycle_ms": 127.4,
+   "median_cycle_ms": 21.5,
+   "pose_error_m": 0.0,
+   "decisions": {
+    "GO": 89,
+    "SLOW": 11,
+    "REROUTE": 0,
+    "STOP": 1
+   },
+   "rules": {
+    "R8": 100,
+    "G0": 1
+   }
+  },
+  {
+   "scenario": "wall",
+   "seed": 2,
+   "outcome": "success",
+   "success": true,
+   "time_s": 10.2,
+   "path_m": 9.16,
+   "final_dist_m": 0.23,
+   "collisions": 0,
+   "interventions": 0,
+   "dstar_cycles": 44,
+   "replans": 43,
+   "max_goal_plan_ms": 68.9,
+   "max_cycle_ms": 86.1,
+   "median_cycle_ms": 25.9,
+   "pose_error_m": 0.0,
+   "decisions": {
+    "GO": 87,
+    "SLOW": 15,
+    "REROUTE": 0,
+    "STOP": 1
+   },
+   "rules": {
+    "R8": 102,
+    "G0": 1
+   }
+  },
+  {
+   "scenario": "dead_end",
+   "seed": 0,
+   "outcome": "success",
+   "success": true,
+   "time_s": 10.1,
+   "path_m": 9.25,
+   "final_dist_m": 0.24,
+   "collisions": 0,
+   "interventions": 0,
+   "dstar_cycles": 54,
+   "replans": 49,
+   "max_goal_plan_ms": 77.7,
+   "max_cycle_ms": 100.6,
+   "median_cycle_ms": 33.7,
+   "pose_error_m": 0.0,
+   "decisions": {
+    "GO": 88,
+    "SLOW": 13,
+    "REROUTE": 0,
+    "STOP": 1
+   },
+   "rules": {
+    "R8": 101,
+    "G0": 1
+   }
+  },
+  {
+   "scenario": "dead_end",
+   "seed": 1,
+   "outcome": "success",
+   "success": true,
+   "time_s": 10.1,
+   "path_m": 9.32,
+   "final_dist_m": 0.23,
+   "collisions": 0,
+   "interventions": 0,
+   "dstar_cycles": 55,
+   "replans": 41,
+   "max_goal_plan_ms": 101.0,
+   "max_cycle_ms": 128.4,
+   "median_cycle_ms": 33.7,
+   "pose_error_m": 0.0,
+   "decisions": {
+    "GO": 89,
+    "SLOW": 12,
+    "REROUTE": 0,
+    "STOP": 1
+   },
+   "rules": {
+    "R8": 101,
+    "G0": 1
+   }
+  },
+  {
+   "scenario": "dead_end",
+   "seed": 2,
+   "outcome": "success",
+   "success": true,
+   "time_s": 9.9,
+   "path_m": 9.18,
+   "final_dist_m": 0.25,
+   "collisions": 0,
+   "interventions": 0,
+   "dstar_cycles": 55,
+   "replans": 42,
+   "max_goal_plan_ms": 91.0,
+   "max_cycle_ms": 117.1,
+   "median_cycle_ms": 32.8,
+   "pose_error_m": 0.0,
+   "decisions": {
+    "GO": 88,
+    "SLOW": 11,
+    "REROUTE": 0,
+    "STOP": 1
+   },
+   "rules": {
+    "R8": 99,
+    "G0": 1
+   }
+  },
+  {
+   "scenario": "pedestrian",
+   "seed": 0,
+   "outcome": "success",
+   "success": true,
+   "time_s": 17.6,
+   "path_m": 13.78,
+   "final_dist_m": 0.24,
+   "collisions": 0,
+   "interventions": 0,
+   "dstar_cycles": 92,
+   "replans": 62,
+   "max_goal_plan_ms": 127.5,
+   "max_cycle_ms": 159.2,
+   "median_cycle_ms": 31.6,
+   "pose_error_m": 0.0,
+   "decisions": {
+    "GO": 135,
+    "SLOW": 19,
+    "REROUTE": 11,
+    "STOP": 12
+   },
+   "rules": {
+    "R8": 165,
+    "R2": 11,
+    "G0": 1
+   }
+  },
+  {
+   "scenario": "pedestrian",
+   "seed": 1,
+   "outcome": "success",
+   "success": true,
+   "time_s": 16.2,
+   "path_m": 11.62,
+   "final_dist_m": 0.23,
+   "collisions": 0,
+   "interventions": 0,
+   "dstar_cycles": 75,
+   "replans": 64,
+   "max_goal_plan_ms": 103.5,
+   "max_cycle_ms": 126.0,
+   "median_cycle_ms": 31.7,
+   "pose_error_m": 0.0,
+   "decisions": {
+    "GO": 106,
+    "SLOW": 29,
+    "REROUTE": 13,
+    "STOP": 15
+   },
+   "rules": {
+    "R8": 148,
+    "R2": 14,
+    "G0": 1
+   }
+  },
+  {
+   "scenario": "pedestrian",
+   "seed": 2,
+   "outcome": "success",
+   "success": true,
+   "time_s": 10.8,
+   "path_m": 7.87,
+   "final_dist_m": 0.22,
+   "collisions": 0,
+   "interventions": 0,
+   "dstar_cycles": 36,
+   "replans": 36,
+   "max_goal_plan_ms": 75.4,
+   "max_cycle_ms": 97.3,
+   "median_cycle_ms": 22.6,
+   "pose_error_m": 0.0,
+   "decisions": {
+    "GO": 73,
+    "SLOW": 16,
+    "REROUTE": 3,
+    "STOP": 17
+   },
+   "rules": {
+    "R8": 92,
+    "R2": 16,
+    "G0": 1
+   }
+  },
+  {
+   "scenario": "slalom",
+   "seed": 0,
+   "outcome": "success",
+   "success": true,
+   "time_s": 11.2,
+   "path_m": 9.95,
+   "final_dist_m": 0.22,
+   "collisions": 0,
+   "interventions": 0,
+   "dstar_cycles": 65,
+   "replans": 63,
+   "max_goal_plan_ms": 85.5,
+   "max_cycle_ms": 103.4,
+   "median_cycle_ms": 29.5,
+   "pose_error_m": 0.0,
+   "decisions": {
+    "GO": 84,
+    "SLOW": 10,
+    "REROUTE": 18,
+    "STOP": 1
+   },
+   "rules": {
+    "R8": 94,
+    "R3": 18,
+    "G0": 1
+   }
+  },
+  {
+   "scenario": "slalom",
+   "seed": 1,
+   "outcome": "success",
+   "success": true,
+   "time_s": 11.6,
+   "path_m": 10.06,
+   "final_dist_m": 0.24,
+   "collisions": 0,
+   "interventions": 0,
+   "dstar_cycles": 67,
+   "replans": 64,
+   "max_goal_plan_ms": 118.1,
+   "max_cycle_ms": 145.3,
+   "median_cycle_ms": 30.4,
+   "pose_error_m": 0.0,
+   "decisions": {
+    "GO": 84,
+    "SLOW": 13,
+    "REROUTE": 19,
+    "STOP": 1
+   },
+   "rules": {
+    "R8": 97,
+    "R3": 19,
+    "G0": 1
+   }
+  },
+  {
+   "scenario": "slalom",
+   "seed": 2,
+   "outcome": "success",
+   "success": true,
+   "time_s": 11.5,
+   "path_m": 10.22,
+   "final_dist_m": 0.24,
+   "collisions": 0,
+   "interventions": 0,
+   "dstar_cycles": 67,
+   "replans": 66,
+   "max_goal_plan_ms": 117.4,
+   "max_cycle_ms": 140.6,
+   "median_cycle_ms": 33.2,
+   "pose_error_m": 0.0,
+   "decisions": {
+    "GO": 88,
+    "SLOW": 10,
+    "REROUTE": 17,
+    "STOP": 1
+   },
+   "rules": {
+    "R8": 98,
+    "R3": 17,
+    "G0": 1
+   }
+  },
+  {
+   "scenario": "trap",
+   "seed": 0,
+   "outcome": "success",
+   "success": true,
+   "time_s": 26.6,
+   "path_m": 23.69,
+   "final_dist_m": 0.24,
+   "collisions": 0,
+   "interventions": 0,
+   "dstar_cycles": 178,
+   "replans": 133,
+   "max_goal_plan_ms": 384.7,
+   "max_cycle_ms": 403.0,
+   "median_cycle_ms": 33.9,
+   "pose_error_m": 0.0,
+   "decisions": {
+    "GO": 232,
+    "SLOW": 14,
+    "REROUTE": 18,
+    "STOP": 3
+   },
+   "rules": {
+    "R8": 257,
+    "G2": 2,
+    "R3": 7,
+    "G0": 1
+   }
+  },
+  {
+   "scenario": "trap",
+   "seed": 1,
+   "outcome": "success",
+   "success": true,
+   "time_s": 31.3,
+   "path_m": 26.64,
+   "final_dist_m": 0.25,
+   "collisions": 0,
+   "interventions": 0,
+   "dstar_cycles": 228,
+   "replans": 187,
+   "max_goal_plan_ms": 473.3,
+   "max_cycle_ms": 498.8,
+   "median_cycle_ms": 35.1,
+   "pose_error_m": 0.0,
+   "decisions": {
+    "GO": 250,
+    "SLOW": 12,
+    "REROUTE": 49,
+    "STOP": 3
+   },
+   "rules": {
+    "R8": 293,
+    "G2": 2,
+    "R3": 18,
+    "G0": 1
+   }
+  },
+  {
+   "scenario": "trap",
+   "seed": 2,
+   "outcome": "success",
+   "success": true,
+   "time_s": 26.5,
+   "path_m": 23.72,
+   "final_dist_m": 0.23,
+   "collisions": 0,
+   "interventions": 0,
+   "dstar_cycles": 175,
+   "replans": 154,
+   "max_goal_plan_ms": 480.4,
+   "max_cycle_ms": 504.3,
+   "median_cycle_ms": 34.1,
+   "pose_error_m": 0.0,
+   "decisions": {
+    "GO": 236,
+    "SLOW": 11,
+    "REROUTE": 16,
+    "STOP": 3
+   },
+   "rules": {
+    "R8": 255,
+    "G2": 2,
+    "R3": 8,
+    "G0": 1
+   }
+  }
+ ]
+}

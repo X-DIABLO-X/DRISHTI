@@ -17,6 +17,7 @@ from ..config import CFG, PROC_W, PROC_H, DEPTH_INPUT
 from ..types import FramePacket, DepthResult
 from ..io_utils import ego_mask, device as pick_device
 from ..perception.geometry import fit_metric_ground, depth_from_q, GroundFit
+from ..perception.fit_validity import FitValidityTracker
 
 MODEL_ID = "depth-anything/Depth-Anything-V2-Small-hf"
 _IMAGENET_MEAN = np.array([0.485, 0.456, 0.406], np.float32)
@@ -41,10 +42,14 @@ class DepthStage:
         self._prev_fit: Optional[GroundFit] = None
         self._prev_q: Optional[np.ndarray] = None
         self.last_ms = 0.0
+        self.fit_validity = FitValidityTracker()
+        self.last_fit: Optional[GroundFit] = None
+        self.last_validity = None
 
     def reset(self) -> None:
         self._prev_fit = None
         self._prev_q = None
+        self.fit_validity.reset()
 
     # ------------------------------------------------------------------ core
     @torch.no_grad()
@@ -85,6 +90,7 @@ class DepthStage:
             base_valid &= (seg_label != 0)          # sky carries no usable geometry
 
         fit = fit_metric_ground(q, base_valid, sl, prior=self._prev_fit)
+        fit_ok = bool(fit.ok)
         if not fit.ok:
             fit = self._prev_fit if (self._prev_fit is not None and self._prev_fit.ok) else GroundFit(
                 a=1.0, b=0.05, normal=np.array([0.0, 1.0, 0.0], np.float32),
@@ -96,6 +102,10 @@ class DepthStage:
         valid &= em
         if sl is not None:
             valid &= (sl != 0)
+        # where the ground fit is unreliable the region is invalid -> UNKNOWN downstream
+        fv = self.fit_validity(q, base_valid, sl, fit, fit_ok)
+        valid &= fv.valid
+        self.last_fit, self.last_validity = fit, fv
 
         packet.depth = DepthResult(rel_inv=q, depth_m=depth, scale=fit.a, shift=fit.b,
                                    align_residual=fit.residual, align_inliers=fit.inliers,
