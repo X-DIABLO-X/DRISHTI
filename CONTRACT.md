@@ -153,3 +153,26 @@ written to `output/benchmarks.json`. **Measure, don't assert.** Report the hardw
    verifiable (shapes, ranges, timings).
 3. A short report back: what you built, what you measured, what is faked or approximated
    and why, and anything the lead must wire up.
+
+## Navigation additions (SIH26126 presentation)
+
+Added after the perception build, on top of the contract above. None of them edit
+the frozen modules: goal-layer settings live in `drishti/nav/nav_config.py`, and
+vehicle profiles are applied to the live `CFG` at start-up by `drishti/vehicles.py`.
+
+| Concern | Module | Produces / does |
+|---|---|---|
+| fit validity | `drishti/perception/fit_validity.py` | mask ANDed into `DepthResult.valid` where the ground fit is unreliable |
+| movers | `drishti/perception/dynamic_layer.py` | `DynamicUpdate`; inflated cells that expire in < 1 s, written into the planner state |
+| Point B | `drishti/nav/goal_planner.py`, `goal_map.py` | `GoalStatus` (mode, steer point, D* Lite path, recalled state) |
+| replanning | `drishti/nav/dstar_lite.py` | incremental shortest path on the world-fixed cost grid |
+| rover IMU | `drishti/perception/imu_fusion.py` | scale/heading-corrected `d_trans`, `d_yaw` |
+| loops | `drishti/perception/pose_graph.py`, `loop_closure.py` | verified loop edges, optimised keyframe poses |
+| live loop | `drishti/runtime.py` | `DrishtiNavigator.step(bgr, t) -> NavOutput(v, w, decision, ...)` |
+| ROS 2 | `ros2/drishti_ros/` | `drishti_node` (Image in, Twist out), Gazebo Harmonic world, mission monitor |
+
+Same honesty rules apply. The Point A -> B numbers come from `tools/sim_goal_nav.py`,
+which renders the 2.5-D state from a ground-truth map with no perception networks in
+the loop; report them as decision-level results, never as perception or field results.
+Goal-level stops use rule ids `G0` (arrived), `G1` (no route) and `G2` (search still
+running) alongside the supervisor's `R1`-`R8`.

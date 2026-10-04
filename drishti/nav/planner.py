@@ -53,6 +53,17 @@ class PlannerWeights:
     progress: float = 1.6
     turn: float = 0.18
     step: float = 1.1
+    #: cost of standing still while a goal is set (only with `goal_xy`).  Without
+    #: it, a goal *behind* the vehicle deadlocks it: every turning arc earns little
+    #: progress and pays turn/clearance terms, so STOP always scores lowest.  It is
+    #: a cost, not a constraint - infeasible arcs stay rejected and every
+    #: supervisor gate still applies - so the vehicle still stops when no safe arc
+    #: exists or the remaining arcs are worse than idling by more than this.
+    idle: float = 2.0
+    #: with a goal point: penalty for ending the arc facing away from it, in
+    #: [0, heading] as (1 - cos(angle off)) / 2.  Distance-reduction alone barely
+    #: separates "U-turn towards a point behind" from "creep forward away from it".
+    heading: float = 1.5
 
 
 #: (base action, extra angular offset rad/s) fan.  Small deterministic spread
@@ -101,16 +112,25 @@ class Planner:
 
     def plan(self, state: np.ndarray,
              wm_risk: Optional[Sequence[float]] = None,
-             goal_yaw: float = 0.0) -> list[Trajectory]:
+             goal_yaw: float = 0.0,
+             goal_xy: Optional[Sequence[float]] = None) -> list[Trajectory]:
         """Score every candidate arc.  `wm_risk` is one risk in [0,1] per action.
 
         `goal_yaw` is the desired heading in the vehicle frame (0 = straight
-        ahead, +CCW).  With no global goal available offline, the planner's goal
+        ahead, +CCW).  On the recorded footage there is no Point B, so the goal
         direction is "keep going forward along the trail", i.e. 0.
+
+        `goal_xy` is the point the arcs should head for, in the vehicle frame
+        (Point B itself on open ground, or the D* Lite look-ahead point when the
+        vehicle is boxed in; see `goal_planner.py`).  When given, progress is the
+        reduction in distance to that point, so an arc that would overshoot it
+        earns nothing for the overshoot.
         """
         wmr = np.zeros(N_ACTIONS, np.float32) if wm_risk is None \
             else np.clip(np.asarray(wm_risk, np.float32).ravel()[:N_ACTIONS], 0, 1)
         gdir = np.array([-np.sin(goal_yaw), np.cos(goal_yaw)], np.float32)
+        gxy = None if goal_xy is None else np.asarray(goal_xy, np.float32).ravel()[:2]
+        g0 = float(np.linalg.norm(gxy)) if gxy is not None else 0.0
         step_map = bu.height_step_map(state)      # computed once for all candidates
 
         trajs: list[Trajectory] = []
@@ -119,7 +139,10 @@ class Planner:
             m = bu.sweep(state, xy, yaw, self.margin, step_map)
             clr = bu.sweep_clearance_series(state, xy, step_map)
 
-            progress = float(np.dot(xy[-1], gdir))
+            if gxy is None:
+                progress = float(np.dot(xy[-1], gdir))
+            else:
+                progress = g0 - float(np.min(np.linalg.norm(xy - gxy[None], axis=1)))
             step_norm = float(np.clip(m.max_step / max(CFG.ugv.clearance_m, 1e-3), 0, 2))
             sweep_risk = float(np.max(m.per_step_risk))
             inv_clear = float(1.0 / max(m.min_clearance, 0.08)) if m.min_clearance < 2.0 else 0.0
@@ -156,6 +179,16 @@ class Planner:
                 reason = (f"R-P5 {m.off_map_frac*100:.0f}% of the rollout leaves the "
                           f"{CFG.bev.range_forward_m:.1f} m map")
 
+            if gxy is not None:
+                if v < 0.05:
+                    cost += self.w.idle
+                elif g0 - progress > 0.30:
+                    # only arcs that do not pass through the target are judged on
+                    # where they end up facing; one that reaches it has done its job
+                    to = gxy - xy[-1]
+                    if float(np.hypot(to[0], to[1])) > 0.15:
+                        want = float(np.arctan2(-to[0], to[1]))
+                        cost += self.w.heading * 0.5 * (1.0 - float(np.cos(want - yaw[-1])))
             if not feasible:
                 cost += 100.0
 
