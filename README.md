@@ -11,7 +11,7 @@
 [![PyTorch](https://img.shields.io/badge/PyTorch-2.11-ee4c2c.svg)](https://pytorch.org/)
 [![ROS 2 Jazzy](https://img.shields.io/badge/ROS%202-Jazzy-22314e.svg)](ros2/drishti_ros)
 [![License: MIT](https://img.shields.io/badge/code%20license-MIT-green.svg)](LICENSE)
-[![Stages](https://img.shields.io/badge/pipeline-10%20stages%20complete-success.svg)](#-pipeline-status)
+[![Stages](https://img.shields.io/badge/pipeline-13%20stages-success.svg)](#-pipeline-status)
 [![Videos](https://img.shields.io/badge/demo%20videos-45-informational.svg)](#-see-it-run)
 [![A to B](https://img.shields.io/badge/A%E2%86%92B%20sim-18%2F18%2C%200%20collisions-success.svg)](#-point-a--point-b)
 
@@ -249,9 +249,9 @@ So learning only **suggests**, and the rule-based supervisor **decides**. Over t
 | 08 | 2.5-D local map | ✅ complete | 5/5 videos |
 | 09 | World model rollouts (GRU) | ✅ complete | trained + evaluated, `logs/` |
 | 10 | RL policy plus supervisor | ✅ complete | trained + evaluated, `logs/` |
-| — | Goal layer: Point B, D\* Lite, dynamic obstacles | ✅ implemented | 18/18 sim episodes, unit tests |
-| — | Rover IMU fusion, loop closure + pose graph | ✅ implemented | unit tests on synthetic data |
-| — | Live runtime + ROS 2 node + Gazebo Harmonic world | ✅ implemented | not yet run in Gazebo in this repo |
+| 11 | Goal layer: Point B, D\* Lite, dynamic obstacles | ✅ implemented | 18/18 sim episodes, unit tests |
+| 12 | Rover IMU fusion, loop closure + pose graph | ✅ implemented | unit tests on synthetic data |
+| 13 | Live runtime + ROS 2 node + Gazebo Harmonic world | ✅ implemented | not yet run in Gazebo in this repo |
 
 **45 rendered videos across stages 01–08.** The world model (728K params, action-conditioned occupancy forecasting) and the PPO policy (22.9K params, gated by the supervisor) are trained, evaluated and cached; their results are in `logs/`.
 
